@@ -42,8 +42,10 @@ command before you run it, keep messages short, and avoid jargon.
 - **Preview:** Angelos opens pages with the VS Code **Live Server** extension.
   There is no dev server to start.
 - **Look:** dark night sky, violet accent, IBM Plex Sans and IBM Plex Mono (from Google Fonts).
-- **Local only:** no hosting, domain, deployment or analytics yet. Upload nothing.
-- **Not a git repository** yet.
+- **Online:** public GitHub repo `aggelosmeg/angelos-portfolio`, published with
+  GitHub Pages at https://aggelosmeg.github.io/angelos-portfolio/. No custom
+  domain or analytics. To update the live site: commit, then `git push`.
+- **Kept off GitHub** (see `.gitignore`): the CVs and all raw source folders.
 
 ## 4. Content rules (most important)
 

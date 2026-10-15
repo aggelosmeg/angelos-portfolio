@@ -10,7 +10,7 @@ The person working with you has never built a website before. Explain any comman
 
 - **No framework:** plain HTML + CSS, written by Claude. No Astro and no build step (decided by Angelos, 2026-10-11). Angelos previews pages with VS Code Live Server.
 - **Look chosen:** night sky with a violet accent and IBM Plex fonts. Layout is in `css/base.css`, colours and fonts in `css/theme.css`.
-- **Local only for now:** no hosting, deployment, domain or analytics yet.
+- **Hosting:** GitHub Pages from the public repo `aggelosmeg/angelos-portfolio` (2026-10-15), live at https://aggelosmeg.github.io/angelos-portfolio/. No custom domain or analytics yet. Commits are authored as Angelos; CVs and raw sources stay local via `.gitignore`.
 - **Styling:** plain CSS with CSS variables (colors, fonts, spacing) defined in one place, so that the whole look can be changed easily. No heavy UI frameworks.
 - **Main sections** (from the brief): Home, Projects, Master's Thesis, Science Outreach, Visual Work, About, Contact, plus a "View / Download CV" button in the header on every page.
 
