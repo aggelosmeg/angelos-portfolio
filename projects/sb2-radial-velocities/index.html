@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Radial Velocities of a Double-Lined Spectroscopic Binary – Angelos Mengoudis</title>
+  <meta name="description" content="Measuring how fast each of the two stars in a binary system is moving, using Bayesian statistics and MCMC.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/base.css">
+  <link rel="stylesheet" href="../../css/theme.css">
+</head>
+<body>
+
+  <!-- ===== Header ===== -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="../../index.html" class="brand">Angelos Mengoudis</a>
+      <nav class="main-nav" aria-label="Main">
+        <a href="../../index.html">Home</a>
+        <a href="../../projects.html" aria-current="page">Projects</a>
+        <a href="#">Master's Thesis</a>
+        <a href="../../outreach/index.html">Science Outreach</a>
+        <a href="#">Visual Work</a>
+        <a href="#">About</a>
+        <a href="#">Contact</a>
+      </nav>
+      <details class="cv-menu">
+        <summary class="btn btn-primary">View / Download CV</summary>
+        <ul>
+          <li><a href="../../CV_Science%201.pdf" target="_blank">Science / Research</a></li>
+          <li><a href="../../CV_Data.pdf" target="_blank">Data Analysis</a></li>
+          <li><a href="../../CV_Science_communication.pdf" target="_blank">Science Communication</a></li>
+          <li><a href="../../CV_Teaching.pdf" target="_blank">Teaching</a></li>
+        </ul>
+      </details>
+    </div>
+  </header>
+
+  <main class="container">
+    <a href="../../projects.html" class="back-link">← All projects</a>
+
+    <!-- ===== Title ===== -->
+    <section class="project-head">
+      <p class="badge">Data Analysis</p>
+      <h1>Radial Velocities of a Double-Lined Spectroscopic Binary</h1>
+      <p class="summary">I measured how fast each of the two stars in a binary system is moving, using Bayesian statistics and a Monte Carlo sampler.</p>
+
+      <dl class="facts">
+        <div><dt>Year</dt><dd>2025</dd></div>
+        <div><dt>Context</dt><dd>Data science course assignment, University of Geneva</dd></div>
+        <div><dt>Method</dt><dd>Gaussian model fitting, MCMC</dd></div>
+        <div><dt>Built with</dt><dd>Python, NumPy, SciPy</dd></div>
+      </dl>
+    </section>
+
+    <!-- ===== The physics: text left, animation right ===== -->
+    <section class="split">
+      <article class="prose">
+        <h2>The physics</h2>
+        <p>The star HD 195521 is actually two stars orbiting each other. We can't see them separately, but their light is recorded together. As they orbit, one moves towards us while the other moves away, and the Doppler effect shifts the light of each star by a different amount.</p>
+        <p>In the data, each star shows up as a dip. The position of the dip gives that star's velocity along our line of sight, its radial velocity. Observed on three different nights, the two dips move apart, merge, and separate again on the other side.</p>
+      </article>
+
+      <!-- Looping animation, drawn by the script at the bottom of the page -->
+      <figure class="binary-anim">
+        <svg viewBox="0 0 400 370" role="img" aria-label="Animation: two stars orbit each other. Below, the combined light shows two dips that slide back and forth with each star's motion and merge into one when the stars cross.">
+          <text x="12" y="20" class="anim-label">Seen from above</text>
+
+          <!-- Orbits and centre of mass -->
+          <ellipse id="orbit1" class="anim-orbit"/>
+          <ellipse id="orbit2" class="anim-orbit"/>
+          <path d="M196 100H204M200 96V104" class="anim-orbit"/>
+          <g id="stars">
+            <circle id="star1" r="9" class="anim-star1"/>
+            <circle id="star2" r="7" class="anim-star2"/>
+          </g>
+          <text x="200" y="176" text-anchor="middle" class="anim-label">↓ towards us</text>
+
+          <!-- What we observe -->
+          <text x="12" y="216" class="anim-label">What we observe</text>
+          <path id="observed" class="anim-observed"/>
+          <path id="dip1" class="anim-dip1"/>
+          <path id="dip2" class="anim-dip2"/>
+          <path d="M20 342H380" class="anim-axis"/>
+          <path d="M200 338V346" class="anim-axis"/>
+          <text x="20" y="362" class="anim-label">← towards us</text>
+          <text x="380" y="362" text-anchor="end" class="anim-label">away →</text>
+        </svg>
+        <figcaption>
+          <span class="key key-observed"></span> combined light we receive
+          <span class="key key-dips"></span> each star's dip, which the model separates
+        </figcaption>
+      </figure>
+    </section>
+
+    <figure class="figure plot wide">
+      <img src="images/ccf-three-observations.png" alt="Three panels, one per observation. In the first and third, two separate dips appear at different velocities, on opposite sides. In the middle panel they overlap into a single dip.">
+      <figcaption>The same pair of stars on three nights. Yellow and pink mark my first estimates of where each star's dip is. In the middle observation the two dips overlap.</figcaption>
+    </figure>
+
+    <!-- ===== What I did ===== -->
+    <article class="prose">
+      <h2>What I did</h2>
+      <ul>
+        <li>Modelled each observation as two Gaussian dips, one per star, and made a first estimate of their positions.</li>
+        <li>Wrote the log-likelihood of the data given the model, with an extra noise term because the quoted errors were underestimated.</li>
+        <li>Combined it with priors to get the posterior probability of the parameters.</li>
+        <li>Sampled the posterior with MCMC, a Monte Carlo method, to get each star's velocity and its uncertainty.</li>
+        <li>Fitted the three observations together, sharing the shape of each star's dip across nights, which helps most for the overlapping one.</li>
+      </ul>
+    </article>
+
+    <figure class="figure plot" style="max-width: 480px">
+      <img src="images/ccf-initial-model-epoch-1.png" alt="The measured curve with two separate dips, with a green two-Gaussian model following both.">
+      <figcaption>Blue: the data. Green: my two-Gaussian model, before the MCMC fit.</figcaption>
+    </figure>
+
+    <!-- ===== The statistics ===== -->
+    <article class="prose">
+      <h2>Learning the statistics</h2>
+      <p>The fitting itself was standard data analysis. What made this project useful for me was learning the statistics behind it, such as likelihoods, priors, posteriors and MCMC, and applying them to a real problem instead of a textbook example.</p>
+      <p>The sampler takes a random walk through the parameters. At first it wanders, then it settles. That first stretch, the burn-in, is thrown away, and the rest gives the result and its uncertainty.</p>
+    </article>
+
+    <div class="figure-row wide">
+      <figure class="figure plot">
+        <img src="images/mcmc-chains-observation-2.png" alt="Eight stacked traces, one per parameter, against step number on a logarithmic axis. Each starts flat, shifts, and settles into a noisy band after about ten thousand steps.">
+        <figcaption>The MCMC chains for the overlapping observation. Each parameter shifts at first, then settles into a stable band.</figcaption>
+      </figure>
+      <figure class="figure plot">
+        <img src="images/corner-plot-observation-2.png" alt="A corner plot of seven parameters. Most pairs form narrow, tilted ellipses, showing strong correlations; only the noise parameter forms round blobs.">
+        <figcaption>For the overlapping observation, almost every parameter is correlated with every other: the model can't fully tell which star is which. Fitting all three nights together reduced this.</figcaption>
+      </figure>
+    </div>
+
+    <!-- ===== What I learned ===== -->
+    <article class="prose">
+      <h2>What I learned</h2>
+      <ul>
+        <li>Writing a likelihood and priors for a real model</li>
+        <li>Running MCMC and checking it: convergence, burn-in, uncertainties</li>
+        <li>Reading parameter correlations from corner plots</li>
+        <li>Fitting models to real astronomical data</li>
+      </ul>
+
+      <h2>Related projects</h2>
+      <ul>
+        <li><a href="../cnn-from-scratch/index.html">Convolutional Neural Network from Scratch</a></li>
+      </ul>
+    </article>
+  </main>
+
+  <!-- ===== Footer ===== -->
+  <footer class="site-footer" id="contact">
+    <div class="container footer-inner">
+      <div>
+        <h2>Get in touch</h2>
+        <p>For research, collaborations, jobs, outreach or creative projects.</p>
+      </div>
+      <ul class="contact-list">
+        <li><a href="mailto:Angelos.Mengoudis@etu.unige.ch">Angelos.Mengoudis@etu.unige.ch</a></li>
+        <li><a href="https://www.linkedin.com/in/angelos-mengoudis" target="_blank">LinkedIn</a></li>
+        <li><a href="#" class="todo">GitHub (URL to add)</a></li>
+      </ul>
+    </div>
+    <div class="container footer-bottom">© Angelos Mengoudis</div>
+  </footer>
+
+  <script>
+    // Binary-star animation.
+    // Top: two stars orbit their centre of mass (seen from above, observer at the bottom).
+    // Bottom: each star makes a dip whose position follows its velocity towards/away
+    // from us (Doppler shift). The solid line is what we observe: the sum of both dips.
+    (function () {
+      const $ = id => document.getElementById(id);
+      const cx = 200, cy = 100;         // centre of mass
+      const flat = 0.45;                // squash circles into ellipses, for a 3D feel
+      const r1 = 62, r2 = 94;           // heavier star (1) has the smaller orbit
+      const period = 9000;              // ms per orbit
+
+      const base = 240;                 // baseline of the observed light (dips hang below it)
+      const depth1 = 50, depth2 = 40;   // dip depths (px)
+      const width = 13;                 // dip width (px)
+      const maxShift = 115;             // largest dip shift (px), for star 2; keeps dips inside the 20–380 range
+
+      $('orbit1').setAttribute('cx', cx); $('orbit1').setAttribute('cy', cy);
+      $('orbit1').setAttribute('rx', r1); $('orbit1').setAttribute('ry', r1 * flat);
+      $('orbit2').setAttribute('cx', cx); $('orbit2').setAttribute('cy', cy);
+      $('orbit2').setAttribute('rx', r2); $('orbit2').setAttribute('ry', r2 * flat);
+
+      const dip = (x, centre, d) => d * Math.exp(-((x - centre) ** 2) / (2 * width ** 2));
+
+      // Path through y = fn(x). With onlyDip, skip the flat parts so just the dip is drawn.
+      function linePath(fn, onlyDip) {
+        let p = '', drawing = false;
+        for (let x = 20; x <= 380; x += 1) {
+          const y = fn(x);
+          if (onlyDip && y - base < 0.5) { drawing = false; continue; }
+          p += (drawing ? 'L' : 'M') + x + ' ' + y.toFixed(1);
+          drawing = true;
+        }
+        return p;
+      }
+
+      function draw(angle) {
+        // Positions: star 2 is always opposite star 1
+        const s = Math.sin(angle), c = Math.cos(angle);
+        const y1 = cy + r1 * s * flat, y2 = cy - r2 * s * flat;
+        $('star1').setAttribute('cx', cx + r1 * c); $('star1').setAttribute('cy', y1);
+        $('star2').setAttribute('cx', cx - r2 * c); $('star2').setAttribute('cy', y2);
+
+        // Draw the star nearer to us on top
+        const stars = $('stars');
+        stars.appendChild(y1 > y2 ? $('star1') : $('star2'));
+
+        // Velocity towards us ∝ cos(angle); towards us = blueshift = dip moves left
+        const v1 = -(r1 / r2) * maxShift * c;
+        const v2 = maxShift * c;
+        const x1 = 200 + v1, x2 = 200 + v2;
+
+        $('dip1').setAttribute('d', linePath(x => base + dip(x, x1, depth1), true));
+        $('dip2').setAttribute('d', linePath(x => base + dip(x, x2, depth2), true));
+        $('observed').setAttribute('d', linePath(x => base + dip(x, x1, depth1) + dip(x, x2, depth2)));
+      }
+
+      const still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (still) { draw(0.5); return; }
+
+      function frame(t) {
+        draw((t / period) * 2 * Math.PI);
+        requestAnimationFrame(frame);
+      }
+      requestAnimationFrame(frame);
+    })();
+  </script>
+
+</body>
+</html>

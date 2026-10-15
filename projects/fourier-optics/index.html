@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fourier Optics Exercises – Angelos Mengoudis</title>
+  <meta name="description" content="Simulations of how the shape of a telescope's aperture, interferometer layouts and atmospheric seeing set image quality.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/base.css">
+  <link rel="stylesheet" href="../../css/theme.css">
+</head>
+<body>
+
+  <!-- ===== Header (same on every page) ===== -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="../../index.html" class="brand">Angelos Mengoudis</a>
+      <nav class="main-nav" aria-label="Main">
+        <a href="../../index.html">Home</a>
+        <a href="../../projects.html" aria-current="page">Projects</a>
+        <a href="#">Master's Thesis</a>
+        <a href="../../outreach/index.html">Science Outreach</a>
+        <a href="#">Visual Work</a>
+        <a href="#">About</a>
+        <a href="#">Contact</a>
+      </nav>
+      <details class="cv-menu">
+        <summary class="btn btn-primary">View / Download CV</summary>
+        <ul>
+          <li><a href="../../CV_Science%201.pdf" target="_blank">Science / Research</a></li>
+          <li><a href="../../CV_Data.pdf" target="_blank">Data Analysis</a></li>
+          <li><a href="../../CV_Science_communication.pdf" target="_blank">Science Communication</a></li>
+          <li><a href="../../CV_Teaching.pdf" target="_blank">Teaching</a></li>
+        </ul>
+      </details>
+    </div>
+  </header>
+
+  <main class="container">
+    <a href="../../projects.html" class="back-link">← All projects</a>
+
+    <!-- ===== Title ===== -->
+    <section class="project-head">
+      <p class="badge">University Coursework</p>
+      <h1>Fourier Optics Exercises</h1>
+      <p class="summary">A series of simulations showing how the shape of a telescope's aperture sets the image it produces, from a single mirror to arrays of telescopes, and what the atmosphere does to it.</p>
+
+      <dl class="facts">
+        <div><dt>Year</dt><dd>2026</dd></div>
+        <div><dt>Context</dt><dd>Optics and Detectors course exercises</dd></div>
+        <div><dt>Method</dt><dd>Fraunhofer diffraction, PSF and OTF/MTF</dd></div>
+        <div><dt>Built with</dt><dd>Python, NumPy, Matplotlib, HCIPy</dd></div>
+      </dl>
+    </section>
+
+    <!-- ===== The idea ===== -->
+    <article class="prose">
+      <h2>The idea</h2>
+      <p>The image a telescope makes of a single star, its point spread function (PSF), is set by the shape of its aperture. In Fourier optics, the image-plane field is the Fourier transform of the pupil, and the PSF is its squared modulus. The optical transfer function (OTF) shows which spatial frequencies, or levels of detail, the telescope passes on to the image.</p>
+      <p>These exercises apply that one connection to more and more complex cases, from a single mirror to an array of telescopes seen through the atmosphere.</p>
+    </article>
+
+    <!-- ===== Single apertures ===== -->
+    <article class="prose">
+      <h2>Single apertures</h2>
+      <p>I started with a rectangular aperture and a telescope with a central obstruction, a large circular mirror with a smaller disc blocked in the middle. The obstruction keeps roughly the same diffraction scale but moves energy from the central peak into the rings around it.</p>
+    </article>
+
+    <figure class="figure plot" style="max-width: 560px">
+      <img src="images/clear-vs-obstructed-psf.png" alt="Two images of a point source side by side, each a bright centre with concentric rings. The rings are brighter in the obstructed case on the right.">
+      <figcaption>The PSF of a clear circular aperture (left) and of one with a central obstruction (right).</figcaption>
+    </figure>
+
+    <article class="prose">
+      <p>A short section applied the same ideas to the Moon: how large a telescope would need to be to see the Apollo lunar lander, and how much light from a laser comes back from the retroreflectors left on the surface.</p>
+    </article>
+
+    <!-- ===== Interferometers ===== -->
+    <article class="prose">
+      <h2>Interferometers</h2>
+      <p>An interferometer combines light from separated telescopes. With two telescopes, the image of a star becomes a set of Young fringes. Their spacing is set by the separation between the telescopes, the baseline: a longer baseline gives finer fringes and measures a higher spatial frequency.</p>
+      <p>Real telescopes are not pinholes. With two finite apertures, the PSF is the diffraction pattern of a single telescope multiplied by the fringes. The single-telescope pattern acts as an envelope, and it becomes narrower as the telescopes get larger.</p>
+    </article>
+
+    <figure class="figure plot" style="max-width: 640px">
+      <img src="images/two-telescopes-finite-apertures.png" alt="Two rows. Left: two small apertures (top) and two larger apertures (bottom) at the same separation. Right: the matching images, vertical fringes in both, with a ring-shaped single-telescope pattern visible on top of the fringes in the bottom case.">
+      <figcaption>Two telescopes at the same separation B, with diameters of 0.1B (top) and 0.4B (bottom). Left: pupil. Right: PSF. The fringe spacing stays the same, and with larger telescopes the single-telescope diffraction pattern shows on top of the fringes.</figcaption>
+    </figure>
+
+    <article class="prose">
+      <p>Over a finite range of wavelengths, each wavelength makes fringes with a slightly different spacing. They only add up in step near the centre, so the fringes fade further out. This is bandwidth smearing.</p>
+    </article>
+
+    <figure class="figure plot wide">
+      <img src="images/polychromatic-fringe-smearing.png" alt="Left: many overlapping cosine fringe patterns of slightly different period, aligned at the centre and drifting apart towards the edges. Right: a single-wavelength fringe pattern with constant contrast, compared with the summed pattern whose contrast drops away from the centre.">
+      <figcaption>Fringes at individual wavelengths (left), and their sum compared with a single wavelength (right).</figcaption>
+    </figure>
+
+    <article class="prose">
+      <p>With seven telescopes, every pair adds its own baseline. The OTF becomes a sparse set of points instead of a filled disc. I compared the array with filled apertures of 6D and 12D, where D is the diameter of one telescope. The array reaches about the same central sharpness as the 12D aperture, because both have a similar outer size. But it has much stronger sidelobes, because it samples only some spatial frequencies. Rotating the array fills in some of the gaps. This is the principle of aperture synthesis.</p>
+    </article>
+
+    <figure class="figure plot wide">
+      <img src="images/filled-vs-sparse-aperture.png" alt="Two rows of three panels. Top: images of a point source for a 6D filled aperture (a broad spot), a 12D filled aperture (a small spot) and the seven-telescope array (a small central spot with many surrounding peaks). Bottom: the matching frequency coverage, a small disc, a larger disc, and a sparse pattern of dots.">
+      <figcaption>Filled apertures of 6D and 12D compared with the seven-telescope array. Top: PSF. Bottom: MTF, the spatial frequencies each one measures.</figcaption>
+    </figure>
+
+    <!-- ===== Seeing ===== -->
+    <article class="prose">
+      <h2>Atmospheric seeing</h2>
+      <p>The atmosphere adds a phase error that changes with time. Its scale is the Fried parameter r<sub>0</sub>. For an interferometer, each telescope gets its own random phase offset (piston). Only the difference between them matters: it shifts the fringe pattern sideways. In a long exposure these random shifts add up, and the fringes wash out.</p>
+    </article>
+
+    <figure class="figure plot" style="max-width: 640px">
+      <img src="images/piston-fringe-shift.png" alt="Four cosine fringe patterns of the same spacing, each shifted sideways relative to the others, labelled with phase differences of 0, 1.57, 3.14 and 4.71 radians.">
+      <figcaption>Two-telescope fringes for four different phase differences between the telescopes. The pattern keeps its spacing but moves.</figcaption>
+    </figure>
+
+    <article class="prose">
+      <p>For one large telescope, I split the pupil into cells of about r<sub>0</sub>, each with an independent random phase. This is a simplified model, but it shows the effect. As D/r<sub>0</sub> grows, the instant image breaks into speckles. A long exposure blurs them into a broad spot whose size is set by r<sub>0</sub> rather than by the telescope's diameter. As a bonus, I also simulated a phase screen drifting across the pupil (frozen-flow seeing).</p>
+    </article>
+
+    <figure class="figure plot wide">
+      <img src="images/seeing-long-exposure-cuts.png" alt="Two line plots. Left: long-exposure PSF profiles against angle in arcseconds for D over r0 from 0.5 to 100. The small values give a narrow peak; the value 100 gives a broad, noisy hump about ten arcseconds wide. Right: the matching MTF profiles, which get narrower as D over r0 increases.">
+      <figcaption>Long-exposure PSF (left) and MTF (right) cuts for D/r<sub>0</sub> from 0.5 to 100, with angle in arcseconds. As D/r<sub>0</sub> grows, the image broadens from the diffraction size to the seeing size, and the telescope passes fewer spatial frequencies.</figcaption>
+    </figure>
+
+    <article class="prose">
+      <h2>Related projects</h2>
+      <ul>
+        <li><a href="../nirps-guiding-camera/index.html">Characterization of the NIRPS Guiding Camera for Close Visual Binaries</a></li>
+        <li><a href="../optical-design/index.html">Optical Design Exercises</a></li>
+      </ul>
+    </article>
+  </main>
+
+  <!-- ===== Footer (same on every page) ===== -->
+  <footer class="site-footer" id="contact">
+    <div class="container footer-inner">
+      <div>
+        <h2>Get in touch</h2>
+        <p>For research, collaborations, jobs, outreach or creative projects.</p>
+      </div>
+      <ul class="contact-list">
+        <li><a href="mailto:Angelos.Mengoudis@etu.unige.ch">Angelos.Mengoudis@etu.unige.ch</a></li>
+        <li><a href="https://www.linkedin.com/in/angelos-mengoudis" target="_blank">LinkedIn</a></li>
+        <li><a href="#" class="todo">GitHub (URL to add)</a></li>
+      </ul>
+    </div>
+    <div class="container footer-bottom">© Angelos Mengoudis</div>
+  </footer>
+
+</body>
+</html>

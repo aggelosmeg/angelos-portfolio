@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Projects – Angelos Mengoudis</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/theme.css">
+</head>
+<body>
+
+  <!-- ===== Header ===== -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="brand">Angelos Mengoudis</a>
+      <nav class="main-nav" aria-label="Main">
+        <a href="index.html">Home</a>
+        <a href="projects.html" aria-current="page">Projects</a>
+        <a href="#">Master's Thesis</a>
+        <a href="outreach/index.html">Science Outreach</a>
+        <a href="#">Visual Work</a>
+        <a href="#">About</a>
+        <a href="#">Contact</a>
+      </nav>
+      <details class="cv-menu">
+        <summary class="btn btn-primary">View / Download CV</summary>
+        <ul>
+          <li><a href="CV_Science%201.pdf" target="_blank">Science / Research</a></li>
+          <li><a href="CV_Data.pdf" target="_blank">Data Analysis</a></li>
+          <li><a href="CV_Science_communication.pdf" target="_blank">Science Communication</a></li>
+          <li><a href="CV_Teaching.pdf" target="_blank">Teaching</a></li>
+        </ul>
+      </details>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="page-head">
+      <h1>Projects</h1>
+      <p>Research, data analysis, programming and university work.</p>
+    </section>
+
+    <!-- Filter buttons: data-filter matches the words in each card's data-categories -->
+    <div class="filters" role="group" aria-label="Filter projects">
+      <button data-filter="all" aria-pressed="true">All</button>
+      <button data-filter="research" aria-pressed="false">Research &amp; Instrumentation</button>
+      <button data-filter="data" aria-pressed="false">Data Analysis</button>
+      <button data-filter="programming" aria-pressed="false">Programming</button>
+      <button data-filter="coursework" aria-pressed="false">Coursework</button>
+    </div>
+
+    <!--
+      One <article> per project. To add a project, copy a card, change the
+      link, image, text, and data-categories (any of: research data programming coursework).
+    -->
+    <div class="card-grid" id="project-list">
+
+      <article class="card" data-categories="research data">
+        <div class="card-image"><img src="projects/nirps-guiding-camera/images/binary-fibre-visualisation.jpg" alt=""></div>
+        <div class="card-body">
+          <p class="card-meta">2025 · Research &amp; Instrumentation</p>
+          <h3><a href="projects/nirps-guiding-camera/index.html">Characterization of the NIRPS Guiding Camera for Close Visual Binaries</a></h3>
+          <p>How faint a companion star can be and still be seen by the NIRPS guiding camera, and how much of its light leaks into the fibre.</p>
+          <ul class="tags"><li>Python</li><li>Instrumentation</li><li>Contrast curves</li></ul>
+        </div>
+      </article>
+
+      <article class="card" data-categories="programming coursework">
+        <div class="card-image"><img src="projects/cnn-from-scratch/images/galaxy-cigar-shaped-03.png" alt="" style="image-rendering: pixelated"></div>
+        <div class="card-body">
+          <p class="card-meta">2025 · Programming</p>
+          <h3><a href="projects/cnn-from-scratch/index.html">Convolutional Neural Network from Scratch</a></h3>
+          <p>A neural network built from scratch in Python and NumPy that tells elliptical galaxies from cigar-shaped ones.</p>
+          <ul class="tags"><li>Python</li><li>NumPy</li><li>Machine learning</li></ul>
+        </div>
+      </article>
+
+      <article class="card" data-categories="data coursework">
+        <div class="card-image"><img src="projects/sb2-radial-velocities/images/card.svg" alt=""></div>
+        <div class="card-body">
+          <p class="card-meta">2025 · Data Analysis</p>
+          <h3><a href="projects/sb2-radial-velocities/index.html">Radial Velocities of a Double-Lined Spectroscopic Binary</a></h3>
+          <p>Measuring the velocities of both stars in HD 195521 with a two-Gaussian model and MCMC.</p>
+          <ul class="tags"><li>Python</li><li>Spectroscopy</li><li>MCMC</li></ul>
+        </div>
+      </article>
+
+      <article class="card" data-categories="coursework">
+        <div class="card-image"><img src="projects/fourier-optics/images/card.png" alt=""></div>
+        <div class="card-body">
+          <p class="card-meta">2026 · University Coursework</p>
+          <h3><a href="projects/fourier-optics/index.html">Fourier Optics Exercises</a></h3>
+          <p>Simulations of how aperture shape, interferometer layouts and atmospheric seeing set the image of a star.</p>
+          <ul class="tags"><li>Python</li><li>HCIPy</li><li>Optics</li></ul>
+        </div>
+      </article>
+
+      <article class="card" data-categories="coursework">
+        <div class="card-image"><img src="projects/optical-design/images/card.png" alt=""></div>
+        <div class="card-body">
+          <p class="card-meta">2026 · University Coursework</p>
+          <h3><a href="projects/optical-design/index.html">Optical Design Exercises</a></h3>
+          <p>A simple adaptive optics system for the Euler Telescope, and a pair of prisms that undoes the colour spread caused by the atmosphere.</p>
+          <ul class="tags"><li>Python</li><li>Ray tracing</li><li>Optics</li></ul>
+        </div>
+      </article>
+
+      <article class="card" data-categories="data">
+        <div class="card-image"><img src="projects/photometric-calibration/images/card.png" alt=""></div>
+        <div class="card-body">
+          <p class="card-meta">2024 · Data Analysis</p>
+          <h3><a href="projects/photometric-calibration/index.html">Photometric Calibration Pipeline</a></h3>
+          <p>Finding the stars in a telescope image, placing them on the sky, and comparing their counts with Pan-STARRS catalogue fluxes.</p>
+          <ul class="tags"><li>Python</li><li>Photometry</li><li>Plate solving</li></ul>
+        </div>
+      </article>
+
+      <!-- Known projects without material yet (from the brief) -->
+      <article class="card" data-categories="data">
+        <div class="card-image card-logo"><img src="projects/exoclock/images/exoclock-logo.png" alt="ExoClock logo"></div>
+        <div class="card-body">
+          <p class="card-meta">2024 · Data Analysis</p>
+          <h3><a href="projects/exoclock/index.html">Exoplanet Transit Analysis (ExoClock)</a></h3>
+          <p>Timing exoplanet transits for ESA's Ariel mission, in an open project anyone with a telescope can join.</p>
+        </div>
+      </article>
+
+      <article class="card upcoming" data-categories="data">
+        <div class="card-image placeholder">Coming soon</div>
+        <div class="card-body">
+          <p class="card-meta">2024 · Data Analysis</p>
+          <h3>Time-Series Analysis Project</h3>
+          <p>Signal extraction, trends and error estimation in noisy data.</p>
+        </div>
+      </article>
+
+    </div>
+  </main>
+
+  <!-- ===== Footer ===== -->
+  <footer class="site-footer" id="contact">
+    <div class="container footer-inner">
+      <div>
+        <h2>Get in touch</h2>
+        <p>For research, collaborations, jobs, outreach or creative projects.</p>
+      </div>
+      <ul class="contact-list">
+        <li><a href="mailto:Angelos.Mengoudis@etu.unige.ch">Angelos.Mengoudis@etu.unige.ch</a></li>
+        <li><a href="https://www.linkedin.com/in/angelos-mengoudis" target="_blank">LinkedIn</a></li>
+        <li><a href="#" class="todo">GitHub (URL to add)</a></li>
+      </ul>
+    </div>
+    <div class="container footer-bottom">© Angelos Mengoudis</div>
+  </footer>
+
+  <script>
+    // Category filter: show cards whose data-categories include the chosen filter
+    const filterButtons = document.querySelectorAll('.filters button');
+    const cards = document.querySelectorAll('#project-list .card');
+
+    filterButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        const filter = button.dataset.filter;
+        filterButtons.forEach(b => b.setAttribute('aria-pressed', b === button));
+        cards.forEach(card => {
+          const cats = card.dataset.categories.split(' ');
+          card.hidden = filter !== 'all' && !cats.includes(filter);
+        });
+      });
+    });
+  </script>
+</body>
+</html>

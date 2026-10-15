@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Characterization of the NIRPS Guiding Camera for Close Visual Binaries – Angelos Mengoudis</title>
+  <meta name="description" content="How faint can a companion star be and still be seen by the NIRPS guiding camera, and how much of its light leaks into the science fibre?">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/base.css">
+  <link rel="stylesheet" href="../../css/theme.css">
+</head>
+<body>
+
+  <!-- ===== Header ===== -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="../../index.html" class="brand">Angelos Mengoudis</a>
+      <nav class="main-nav" aria-label="Main">
+        <a href="../../index.html">Home</a>
+        <a href="../../projects.html" aria-current="page">Projects</a>
+        <a href="#">Master's Thesis</a>
+        <a href="../../outreach/index.html">Science Outreach</a>
+        <a href="#">Visual Work</a>
+        <a href="#">About</a>
+        <a href="#">Contact</a>
+      </nav>
+      <details class="cv-menu">
+        <summary class="btn btn-primary">View / Download CV</summary>
+        <ul>
+          <li><a href="../../CV_Science%201.pdf" target="_blank">Science / Research</a></li>
+          <li><a href="../../CV_Data.pdf" target="_blank">Data Analysis</a></li>
+          <li><a href="../../CV_Science_communication.pdf" target="_blank">Science Communication</a></li>
+          <li><a href="../../CV_Teaching.pdf" target="_blank">Teaching</a></li>
+        </ul>
+      </details>
+    </div>
+  </header>
+
+  <main class="container">
+    <a href="../../projects.html" class="back-link">← All projects</a>
+
+    <!-- ===== Title ===== -->
+    <section class="project-head">
+      <p class="badge">Research &amp; Instrumentation</p>
+      <h1>Characterization of the NIRPS Guiding Camera for Close Visual Binaries</h1>
+      <p class="summary">I measured how faint a companion star can be and still be seen by the NIRPS guiding camera, and how much of its light can leak into the spectrograph's fibre.</p>
+
+      <dl class="facts">
+        <div><dt>Year</dt><dd>2025</dd></div>
+        <div><dt>Context</dt><dd>Astrophysics Laboratory (APL) project, MSc first semester, University of Geneva</dd></div>
+        <div><dt>Supervisors</dt><dd>Prof. François Bouchy, Lina Messamah (Observatoire de Genève)</dd></div>
+        <div><dt>Built with</dt><dd>Python, NumPy, SciPy, Astropy, Photutils</dd></div>
+      </dl>
+    </section>
+
+    <!-- ===== Opening visual ===== -->
+    <figure class="figure wide">
+      <img src="images/binary-fibre-wide.jpg" alt="A 3D surface of a guiding-camera image: the target star forms a bright crater with the fibre in its centre, drawn as a bundle of glowing blue strands, and a smaller companion peak rises beside it.">
+      <figcaption>My visualisation of a binary system, based on a real guiding-camera image, with a schematic fibre centred on the target star. The companion's light spreads towards the fibre.</figcaption>
+    </figure>
+
+    <!-- ===== The problem: text left, interactive animation right ===== -->
+    <section class="split">
+      <article class="prose">
+        <h2>The problem</h2>
+        <p>A large fraction of stars are in binary or multiple systems, and many of them are expected to have planets. To study those planets, we need to be sure whose light we are measuring.</p>
+        <p>NIRPS is a near-infrared spectrograph on the ESO 3.6 m telescope at La Silla, Chile, that searches for exoplanets with the radial-velocity method. Starlight reaches it through an optical fibre that sees only 0.4″ of sky, centred on the target star. If a companion star is close, part of its light can also fall into the fibre, mix with the target's spectrum and bias the measurement.</p>
+        <p>So I asked two questions: when can the guiding camera see the companion, and how much of its light gets into the fibre?</p>
+      </article>
+
+      <!-- Interactive animation, drawn by the first script at the bottom of the page -->
+      <figure class="anim-box">
+        <svg viewBox="0 0 400 385" role="img" aria-label="Animation: a bright target star sits on the dark fibre hole, and a fainter companion moves closer and farther away. Below, the brightness of both stars along the line through them: the companion's wing reaches into the fibre band, more when it is close and bright.">
+          <defs>
+            <radialGradient id="gStar">
+              <stop offset="0" stop-color="#fffbe6"/>
+              <stop offset="0.12" stop-color="#ffd65a" stop-opacity="0.95"/>
+              <stop offset="0.4" stop-color="#ffd65a" stop-opacity="0.25"/>
+              <stop offset="1" stop-color="#ffd65a" stop-opacity="0"/>
+            </radialGradient>
+            <radialGradient id="gComp">
+              <stop offset="0" stop-color="#fff0f4"/>
+              <stop offset="0.12" stop-color="#ff9eb5" stop-opacity="0.95"/>
+              <stop offset="0.4" stop-color="#ff9eb5" stop-opacity="0.25"/>
+              <stop offset="1" stop-color="#ff9eb5" stop-opacity="0"/>
+            </radialGradient>
+            <clipPath id="skyClip"><rect x="20" y="28" width="360" height="132" rx="8"/></clipPath>
+          </defs>
+
+          <!-- On the sky -->
+          <text x="20" y="18" class="anim-label">On the sky</text>
+          <rect x="20" y="28" width="360" height="132" rx="8" fill="#05060f"/>
+          <g clip-path="url(#skyClip)">
+            <circle cx="200" cy="94" r="48" fill="url(#gStar)"/>
+            <g id="leakComp"><circle r="38" fill="url(#gComp)"/></g>
+          </g>
+          <circle cx="200" cy="94" r="8" class="hole"/>
+          <text x="200" y="153" text-anchor="middle" class="anim-label">fibre</text>
+
+          <!-- Brightness profile -->
+          <text x="20" y="196" class="anim-label">Brightness through both stars (stretched scale)</text>
+          <rect x="192" y="208" width="16" height="150" class="band"/>
+          <path id="leakFill" fill="#ff9eb5" opacity="0.6"/>
+          <path id="leakPrim" class="l-star"/>
+          <path id="leakCompLine" class="l-comp" stroke-dasharray="5 4"/>
+          <path d="M20 358H380" class="l-axis"/>
+          <text x="200" y="376" text-anchor="middle" class="anim-label">fibre</text>
+        </svg>
+        <div class="anim-controls">
+          <label>Separation <input type="range" id="leakSep" min="15" max="140" step="1" value="28"></label>
+          <label>Companion fainter by (mag) <input type="range" id="leakDm" min="0" max="6" step="0.5" value="2"></label>
+        </div>
+        <figcaption>
+          <span class="key" style="border-top-color:#ffd65a"></span> target star
+          <span class="key" style="border-top: 2px dashed #ff9eb5; margin-left: 8px"></span> companion,
+          filled where its light falls into the fibre.
+          <span class="anim-note">Illustration, not measured data.</span>
+        </figcaption>
+      </figure>
+    </section>
+
+    <!-- ===== The pierced mirror ===== -->
+    <section class="split">
+      <figure class="anim-box">
+        <svg viewBox="0 0 400 300" role="img" aria-label="Animation of the light paths: light from the telescope reaches a mirror with a small hole. Light from the target star passes through the hole into the fibre, which goes to the spectrograph. The light around it is reflected to the guiding camera. A small amount of companion light also passes through the hole.">
+          <!-- Field light (incoming band, then reflected band) -->
+          <polygon points="85.3,229.3 146.6,168 233.4,132 110.7,254.7" fill="rgba(255,158,181,0.12)"/>
+          <polygon points="233.4,132 300,132 300,168 146.6,168" fill="rgba(255,158,181,0.12)"/>
+          <path d="M85.3 229.3L146.6 168H300L335 150" class="l-comp flow"/>
+          <path d="M110.7 254.7L233.4 132H300L335 150" class="l-comp flow"/>
+
+          <!-- Target-star light: through the hole into the fibre -->
+          <path d="M92 236L190 150L219.4 124.2" class="l-star flow"/>
+          <path d="M104 248L190 150L215.8 120.6" class="l-star flow"/>
+          <!-- A little companion light also gets through -->
+          <path d="M98 242L190 150L217 122" class="l-comp flow flow-slow" opacity="0.7" stroke-width="1"/>
+
+          <!-- Optics -->
+          <ellipse rx="26" ry="6" transform="translate(98 242) rotate(45)" fill="rgba(143,214,224,0.35)" stroke="#8fd6e0"/>
+          <path d="M142 169.9L184.5 152.3M195.5 147.7L238 130.1" stroke="#8fd6e0" stroke-width="5" stroke-linecap="round"/>
+          <ellipse cx="300" cy="150" rx="6" ry="24" fill="rgba(143,214,224,0.35)" stroke="#8fd6e0"/>
+          <rect x="335" y="132" width="56" height="36" rx="4" fill="rgba(255,255,255,0.08)" stroke="var(--muted)"/>
+          <rect x="-22" y="-9" width="44" height="18" rx="3" transform="translate(229 111) rotate(-45)" fill="rgba(255,255,255,0.08)" stroke="var(--muted)"/>
+          <path d="M246.6 93.4C265 75 290 60 380 60" fill="none" stroke="var(--muted)" stroke-width="3"/>
+
+          <!-- Labels -->
+          <text x="363" y="147" text-anchor="middle" class="anim-label">guiding</text>
+          <text x="363" y="160" text-anchor="middle" class="anim-label">camera</text>
+          <text x="380" y="50" text-anchor="end" class="anim-label">fibre → spectrograph</text>
+          <text x="196" y="196" class="anim-label">pierced mirror</text>
+          <path d="M200 186L192 156" class="l-axis"/>
+          <text x="20" y="290" class="anim-label">↗ light from the telescope</text>
+        </svg>
+        <figcaption>
+          <span class="key" style="border-top-color:#ffd65a"></span> target star
+          <span class="key" style="border-top-color:#ff9eb5; margin-left: 8px"></span> light around it, including a companion.
+          Redrawn from my own diagram.
+        </figcaption>
+      </figure>
+
+      <article class="prose">
+        <h2>Seeing the star and the fibre at once</h2>
+        <p>The light from the telescope reaches a mirror with a small hole in the middle. The target's light passes through the hole into the fibre. Everything around it is reflected to the guiding camera, which keeps the star centred on the hole.</p>
+        <p>That is how the camera can watch the star and the fibre at the same time: every image shows the star with a dark hole where the fibre is. The catch is that the camera only sees the light that does <em>not</em> go into the fibre, so it cannot measure the leak directly.</p>
+      </article>
+    </section>
+
+    <figure class="figure plot wide">
+      <img src="images/fibre-centred-vs-offset.png" alt="Two guiding-camera images on the same colour scale. Left: the star with a dark circular hole at its centre, where the fibre is. Right: the same star with the fibre moved away, showing a bright compact core.">
+      <figcaption>Left: the star centred on the fibre, with the hole in the middle. Right: the fibre moved away, so the whole star is visible. I used these offset images to measure the PSF, the shape of a star's image: a sharp core and a fainter halo (two Moffat profiles, FWHM 0.26″ and 0.44″). The halo is the part that reaches into the fibre.</figcaption>
+    </figure>
+
+    <!-- ===== Filtering: step through the real images ===== -->
+    <section class="split">
+      <article class="prose">
+        <h2>Removing the star's glow</h2>
+        <p>Before searching for companions, I removed the star's own light so that anything companion-sized stands out. I used five filtering steps adapted from <a href="https://arxiv.org/abs/1310.4172" target="_blank">Wahhaj et al. (2013)</a>.</p>
+      </article>
+
+      <figure class="stepper" id="filterStepper">
+        <div class="stepper-frames">
+          <img src="images/filter-step-1.png" class="is-active" alt="The guiding-camera image: a bright ring of starlight around the dark fibre hole, with faint vertical stripes from the detector.">
+          <img src="images/filter-step-2.png" alt="After halo subtraction: only a thinner, sharper ring remains around the hole.">
+          <img src="images/filter-step-3.png" alt="After smoothing: the ring is softer and the pixel noise is gone.">
+          <img src="images/filter-step-4.png" alt="After azimuthal subtraction: the ring is gone, leaving only a few faint blobs near the centre.">
+          <img src="images/filter-step-5.png" alt="After stripe correction: the final filtered image, almost empty apart from faint residuals near the centre.">
+        </div>
+        <div class="stepper-buttons" role="group" aria-label="Filtering steps">
+          <button aria-pressed="true">Image</button>
+          <button aria-pressed="false">1–2 · Unsharp masking</button>
+          <button aria-pressed="false">3 · Narrow Gaussian</button>
+          <button aria-pressed="false">4 · Azimuthal</button>
+          <button aria-pressed="false">5 · Stripes</button>
+        </div>
+        <figcaption class="stepper-caption" aria-live="polite">Before filtering: the star, the dark fibre hole, the halo and the detector's vertical stripes.</figcaption>
+      </figure>
+    </section>
+
+    <!-- ===== Fake companions and 95% completeness ===== -->
+    <section class="split">
+      <article class="prose">
+        <h2>Fake companions and 95% completeness</h2>
+        <p>To find out what the camera can detect, I injected artificial companions, made from the measured star image, in a spiral around the star: one at each separation. Each image then went through the same filtering, and a companion counts as found when a peak above the detection threshold appears at its position.</p>
+        <p>I rotated the spiral through 20 starting angles, 18° apart, so that every separation has 20 companions in different directions around the star. Then I made them all fainter step by step.</p>
+        <p>At each separation, the detection limit is the faintest brightness at which 19 of the 20 are still found: 95% completeness. Together, these limits form the contrast curve.</p>
+      </article>
+
+      <!-- Looping animation, drawn by the third script at the bottom of the page -->
+      <figure class="anim-box" id="injectFigure">
+        <svg viewBox="0 0 400 475" role="img" aria-label="Animation: a spiral of fake companions is placed around the star and rotated through 20 angles, so that every separation has 20 companions. They all grow fainter step by step. For one circled separation, a row of 20 boxes counts how many are still found. At each separation, the limit is the faintest level at which 19 of 20 are found; these limits build up a curve below that drops steeply and then flattens.">
+          <text x="20" y="13" id="injStatus" class="anim-label">Placing a spiral of fake companions</text>
+          <rect x="20" y="20" width="360" height="262" rx="8" fill="#05060f"/>
+          <circle cx="200" cy="151" r="70" fill="url(#gStar)"/>
+          <circle id="injRing" cx="200" cy="151" fill="none" stroke="var(--accent)" stroke-dasharray="3 5" opacity="0"/>
+          <g id="injDots"></g>
+          <g id="injRings"></g>
+          <circle cx="200" cy="151" r="6" class="hole"/>
+
+          <!-- Counter for the circled separation: one box per angle -->
+          <text x="31" y="302" id="injCount" class="anim-label">found at the circled separation: – / 20</text>
+          <text x="353" y="302" text-anchor="middle" class="anim-label" fill="var(--accent)">19 ↓</text>
+          <g id="injTicks"></g>
+          <path d="M353 307V329" class="l-accent" stroke-width="1"/>
+
+          <!-- Contrast curve: the 19-of-20 limit at each separation -->
+          <text x="50" y="350" class="anim-label">fainter ↓</text>
+          <path d="M50 356V462H370" class="l-axis"/>
+          <polyline id="injLine" class="l-accent"/>
+          <g id="injPoints"></g>
+          <text x="370" y="474" text-anchor="end" class="anim-label">separation from the star →</text>
+        </svg>
+        <figcaption>
+          <span class="key" style="border-top-color:#ff9eb5"></span> fake companion
+          <span class="key" style="border-top-color:var(--accent); margin-left: 8px"></span> found, and the 19-of-20 limit.
+          <span class="anim-note">Illustration of the method, not measured data.</span>
+        </figcaption>
+      </figure>
+    </section>
+
+    <figure class="figure plot" style="max-width: 480px">
+      <img src="images/injected-companions.png" alt="A signal-to-noise map of the filtered image: about forty bright dots, the fake companions, arranged in a spiral around the centre on a flat purple background.">
+      <figcaption>The real thing: fake companions in one of my filtered images, shown as a signal-to-noise map. The star's halo has been removed, so the companions stand out against the background.</figcaption>
+    </figure>
+
+    <!-- ===== Result 1: detection limit ===== -->
+    <section class="split">
+      <article class="prose">
+        <h2>How faint can a companion be?</h2>
+        <p>The fake companions give the contrast curve: how much fainter than the target a companion can be and still be detected, at each separation.</p>
+        <p>Close to the star, its halo hides companions. Beyond about 2.5″, the camera finds companions 9.6–9.8 magnitudes fainter than the target, which is around 7,000 to 8,000 times fainter. The curve closely follows a quicker estimate that uses only the noise level (5σ).</p>
+      </article>
+      <figure class="figure plot">
+        <img src="images/contrast-curve.png" alt="Contrast curve: magnitude difference against separation in arcseconds. Two nearly identical lines, 95% completeness and 5 sigma, drop from about 3 at 0.3 arcseconds to about 9.5 at 2.7 arcseconds, then stay flat out to 6 arcseconds.">
+        <figcaption>Contrast curve from the fake companions (95% completeness) and from the noise alone (5σ). Lower means fainter companions can be detected.</figcaption>
+      </figure>
+    </section>
+
+    <!-- ===== Result 2: contamination ===== -->
+    <section class="split">
+      <figure class="figure plot">
+        <img src="images/fibre-contamination.png" alt="Fibre contamination in percent on a log scale against separation, with one coloured curve per magnitude difference from 0 to 10. All curves drop steeply over the first 2 arcseconds and flatten after about 3. A dashed black line, the companion at the contrast limit, cuts across the curves.">
+        <figcaption>Fibre contamination against separation. Colours give how much fainter the companion is; the dashed line is a companion right at the detection limit.</figcaption>
+      </figure>
+      <article class="prose">
+        <h2>How much light leaks in?</h2>
+        <p>To estimate the leak, I placed a shifted and scaled copy of the measured star image at each separation and brightness, and measured how much of its light falls into the fibre. The contamination drops steeply with separation and changes little beyond about 3″.</p>
+        <p>Companions above the dashed line should be seen by the guiding camera. Those below it can stay invisible while still contaminating the fibre, especially at small separations. So a non-detection in the guiding images is not enough: it has to be combined with a contamination estimate.</p>
+      </article>
+    </section>
+
+    <p class="takeaway">A companion the guiding camera can't see can still leak light into the fibre.</p>
+
+    <article class="prose">
+      <h2>Limitations</h2>
+      <p>The analysis uses observations of one star (q Vel) from a single night. The contamination estimate also assumes that the companion's image has the same shape as the measured image of the target star.</p>
+
+      <h2>Report and summary</h2>
+      <ul class="file-list">
+        <li><a href="files/nirps-guiding-camera-summary.pdf" target="_blank">One-page summary (PDF)</a></li>
+        <li><a href="files/nirps-guiding-camera-report.pdf" target="_blank">Full report, 18 pages (PDF)</a></li>
+      </ul>
+
+      <h2>Credits</h2>
+      <p>Supervised by Prof. François Bouchy and Lina Messamah, Observatoire de Genève, University of Geneva.</p>
+
+      <h2>Related projects</h2>
+      <ul>
+        <li><a href="../sb2-radial-velocities/index.html">Radial Velocities of a Double-Lined Spectroscopic Binary</a></li>
+      </ul>
+    </article>
+  </main>
+
+  <!-- ===== Footer ===== -->
+  <footer class="site-footer" id="contact">
+    <div class="container footer-inner">
+      <div>
+        <h2>Get in touch</h2>
+        <p>For research, collaborations, jobs, outreach or creative projects.</p>
+      </div>
+      <ul class="contact-list">
+        <li><a href="mailto:Angelos.Mengoudis@etu.unige.ch">Angelos.Mengoudis@etu.unige.ch</a></li>
+        <li><a href="https://www.linkedin.com/in/angelos-mengoudis" target="_blank">LinkedIn</a></li>
+        <li><a href="#" class="todo">GitHub (URL to add)</a></li>
+      </ul>
+    </div>
+    <div class="container footer-bottom">© Angelos Mengoudis</div>
+  </footer>
+
+  <script>
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const $ = id => document.getElementById(id);
+    const svgNS = 'http://www.w3.org/2000/svg';
+
+    // Returns a sleep(ms) that only counts time while the element is on screen,
+    // so looping animations pause when scrolled away.
+    function visibleSleep(el) {
+      let visible = false;
+      new IntersectionObserver(([e]) => { visible = e.isIntersecting; }).observe(el);
+      return async ms => {
+        for (let t = 0; t < ms;) {
+          await new Promise(r => setTimeout(r, 100));
+          if (visible) t += 100;
+        }
+      };
+    }
+
+    // ---------------------------------------------------------------
+    // 1. "The leak": a companion moves around the target star.
+    // Scale: the 16 px fibre hole = 0.4″, so 40 px per arcsec.
+    // Each star = core + halo Moffat profiles with the FWHMs from my summary
+    // (0.26″ and 0.44″, β = 3). The halo strength is illustrative.
+    // The filled area is the companion light that falls inside the fibre band.
+    // ---------------------------------------------------------------
+    (function () {
+      const centre = 200, holeHalf = 8;
+      const moffat = (r, alpha) => Math.pow(1 + (r / alpha) ** 2, -3);
+      // FWHM = 2α·sqrt(2^(1/β) − 1) ≈ 1.02 α for β = 3 → α ≈ 10.2 px (core), 17.3 px (halo)
+      const psf = (x, x0, amp) => amp * (moffat(x - x0, 10.2) + 0.05 * moffat(x - x0, 17.3));
+      // Stretched brightness scale: shows faint wings, but still falls to zero.
+      // 1 → top of the plot (y = 210), 0 → axis (y = 358)
+      const eps = 3e-4, top = Math.log10(1 + 1.05 / eps);
+      const yOf = v => 358 - 148 * Math.log10(1 + v / eps) / top;
+
+      function curve(fn, x0, x1) {
+        let p = '';
+        for (let x = x0; x <= x1; x += 1) p += (p ? 'L' : 'M') + x + ' ' + yOf(fn(x)).toFixed(1);
+        return p;
+      }
+
+      const sep = $('leakSep'), dm = $('leakDm');
+      $('leakPrim').setAttribute('d', curve(x => psf(x, centre, 1), 20, 380));
+
+      function draw(d, mag) {
+        const amp = Math.pow(10, -0.4 * mag);         // magnitude difference → brightness ratio
+        const xc = centre + d;
+        const comp = x => psf(x, xc, amp);
+
+        const g = $('leakComp');
+        g.setAttribute('transform', `translate(${xc} 94) scale(${1 - mag * 0.07})`);
+        g.setAttribute('opacity', (1 - mag / 9).toFixed(2));
+
+        $('leakCompLine').setAttribute('d', curve(comp, 20, 380));
+        $('leakFill').setAttribute('d',
+          `M${centre - holeHalf} 358` + curve(comp, centre - holeHalf, centre + holeHalf).replace('M', 'L') + `L${centre + holeHalf} 358Z`);
+      }
+
+      // Moves on its own until the visitor touches a slider
+      let auto = !reduceMotion;
+      [sep, dm].forEach(s => s.addEventListener('input', () => {
+        auto = false;
+        draw(+sep.value, +dm.value);
+      }));
+
+      draw(+sep.value, +dm.value);
+      if (!auto) return;
+      function frame(t) {
+        if (!auto) return;
+        const d = 77 + 62 * Math.sin(t / 1600);      // 15–139 px, i.e. about 0.4″–3.5″
+        sep.value = Math.round(d);
+        draw(d, +dm.value);
+        requestAnimationFrame(frame);
+      }
+      requestAnimationFrame(frame);
+    })();
+
+    // ---------------------------------------------------------------
+    // 2. Filtering steps: crossfade between the five real images.
+    // Plays on its own while visible, stops once a step is clicked.
+    // ---------------------------------------------------------------
+    (function () {
+      const box = $('filterStepper');
+      const frames = box.querySelectorAll('.stepper-frames img');
+      const buttons = box.querySelectorAll('.stepper-buttons button');
+      const caption = box.querySelector('.stepper-caption');
+      const captions = [
+        'Before filtering: the star, the dark fibre hole, the halo and the detector\'s vertical stripes.',
+        'Steps 1–2: a broad Gaussian blur models the halo; subtracting it keeps only compact features.',
+        'Step 3: a narrow Gaussian blur removes pixel noise but keeps star-sized signals.',
+        'Step 4: subtracting the average profile around the star removes the leftover rings.',
+        'Step 5: a column-by-column correction removes the stripes. This image is searched for companions.'
+      ];
+      let current = 0, timer = null;
+
+      function show(i) {
+        current = i;
+        frames.forEach((f, k) => f.classList.toggle('is-active', k === i));
+        buttons.forEach((b, k) => b.setAttribute('aria-pressed', k === i));
+        caption.textContent = captions[i];
+      }
+
+      buttons.forEach((b, i) => b.addEventListener('click', () => {
+        clearInterval(timer); timer = null;
+        observer.disconnect();
+        show(i);
+      }));
+
+      const observer = new IntersectionObserver(([entry]) => {
+        if (reduceMotion) return;
+        if (entry.isIntersecting && !timer) timer = setInterval(() => show((current + 1) % frames.length), 2800);
+        if (!entry.isIntersecting) { clearInterval(timer); timer = null; }
+      }, { threshold: 0.5 });
+      observer.observe(box);
+    })();
+
+    // ---------------------------------------------------------------
+    // 3. Fake companions and 95% completeness (illustration of the method).
+    // A spiral of 20 companions (137.5° between neighbours, one per separation) is rotated
+    // through 20 starting angles, 18° apart → 20 companions at every separation.
+    // All are made fainter step by step. At each separation the limit is the faintest level
+    // at which at least 19 of the 20 are still found. Those limits form the contrast curve.
+    // ---------------------------------------------------------------
+    (function () {
+      const N = 20, ANGLES = 20, cx = 200, cy = 151, K = 11;   // K = the circled separation
+      const radius = k => 10 + k * 6.2;
+      // Illustrative limit (magnitudes fainter than the star): steep near the star, then flat
+      const baseLimit = k => 3 + 6.7 * (1 - Math.exp(-3.2 * k / (N - 1)));
+      const plotX = k => 60 + k * 300 / (N - 1);
+      const plotY = m => 360 + (m - 3) / 7 * 98;
+      const status = text => { $('injStatus').textContent = text; };
+      const make = (tag, attrs, parent) => {
+        const el = document.createElementNS(svgNS, tag);
+        for (const a in attrs) el.setAttribute(a, attrs[a]);
+        $(parent).append(el);
+        return el;
+      };
+
+      // dots[j][k]: copy j of the spiral (starting angle j × 18°), companion k (separation k)
+      const dots = [], rings = [], ticks = [], points = [];
+      for (let j = 0; j < ANGLES; j++) {
+        dots.push([]);
+        for (let k = 0; k < N; k++) {
+          const a = (j * 18 + k * 137.5) * Math.PI / 180;
+          const x = cx + radius(k) * Math.cos(a), y = cy + radius(k) * Math.sin(a);
+          dots[j].push(make('circle', { cx: x, cy: y, r: k === K ? 3.2 : 2.2, class: 'c-comp', opacity: 0 }, 'injDots'));
+          if (k === K) rings.push(make('circle', { cx: x, cy: y, r: 7, class: 'l-accent', 'stroke-width': 1.5, opacity: 0 }, 'injRings'));
+        }
+        ticks.push(make('rect', { x: 31.5 + j * 17, y: 310, width: 14, height: 16, rx: 2, fill: 'none', stroke: 'var(--accent)' }, 'injTicks'));
+      }
+      for (let k = 0; k < N; k++) points.push(make('circle', { cx: plotX(k), r: 3, fill: 'var(--accent)', opacity: 0 }, 'injPoints'));
+      $('injRing').setAttribute('r', radius(K));
+
+      // Show every companion at brightness level m. A separation keeps its point at the
+      // last level where at least 19 of its 20 companions were found (skipped if best is null).
+      function setLevel(m, limits, best) {
+        for (let k = 0; k < N; k++) {
+          let found = 0;
+          for (let j = 0; j < ANGLES; j++) {
+            const seen = m <= limits[j][k];
+            if (seen) found++;
+            dots[j][k].setAttribute('opacity', seen ? (0.3 + 0.7 * (10 - m) / 7).toFixed(2) : 0.1);
+            if (k === K) {
+              rings[j].setAttribute('opacity', seen ? 1 : 0);
+              ticks[j].setAttribute('fill', seen ? 'var(--accent)' : 'none');
+            }
+          }
+          if (k === K) $('injCount').textContent = `found at the circled separation: ${found} / 20`;
+          if (best && found >= 19) {
+            best[k] = m;
+            points[k].setAttribute('cy', plotY(m));
+            points[k].setAttribute('opacity', 1);
+          }
+        }
+      }
+      const newLimits = spread => dots.map(() => dots[0].map((_, k) => baseLimit(k) + (Math.random() - 0.5) * spread));
+      const linePoints = best => best.map((m, k) => `${plotX(k)},${plotY(m)}`).join(' ');
+
+      // Still picture for visitors who prefer less motion
+      if (reduceMotion) {
+        const limits = newLimits(1.2), best = [];
+        for (let m = 3; m <= 10; m += 0.5) setLevel(m, limits, best);
+        setLevel(best[K], limits, null);
+        $('injRing').setAttribute('opacity', 0.6);
+        $('injLine').setAttribute('points', linePoints(best));
+        status('The 19-of-20 limit at each separation');
+        return;
+      }
+
+      const sleep = visibleSleep($('injectFigure'));
+
+      async function run() {
+        while (true) {
+          // Reset
+          dots.flat().concat(rings, points).forEach(el => el.setAttribute('opacity', 0));
+          ticks.forEach(t => t.setAttribute('fill', 'none'));
+          $('injRing').setAttribute('opacity', 0);
+          $('injLine').setAttribute('opacity', 0);
+          $('injCount').textContent = 'found at the circled separation: – / 20';
+
+          // 1. One spiral: one companion per separation
+          status('Placing a spiral of fake companions');
+          for (const d of dots[0]) { d.setAttribute('opacity', 1); await sleep(80); }
+          await sleep(700);
+
+          // 2. Rotate it through 20 starting angles
+          for (let j = 1; j < ANGLES; j++) {
+            status(`Rotating the spiral by ${j * 18}° (${j + 1} of 20)`);
+            dots[j].forEach(d => d.setAttribute('opacity', 1));
+            await sleep(300);
+          }
+          status('20 companions at every separation');
+          $('injRing').setAttribute('opacity', 0.6);
+          await sleep(1800);
+
+          // 3. Make them all fainter; each separation keeps its 19-of-20 limit
+          const limits = newLimits(1.2), best = [];
+          for (let m = 3; m <= 10; m += 0.5) {
+            status(`Making them fainter: ${m.toFixed(1)} mag below the star`);
+            setLevel(m, limits, best);
+            await sleep(650);
+          }
+
+          // 4. The limits form the contrast curve
+          setLevel(best[K], limits, null);
+          status('Contrast curve: the 19-of-20 limit at each separation');
+          $('injLine').setAttribute('points', linePoints(best));
+          $('injLine').setAttribute('opacity', 1);
+          await sleep(4500);
+        }
+      }
+      run();
+    })();
+  </script>
+
+</body>
+</html>

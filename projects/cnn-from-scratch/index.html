@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Convolutional Neural Network from Scratch – Angelos Mengoudis</title>
+  <meta name="description" content="A convolutional neural network built from scratch in Python and NumPy that tells elliptical galaxies from cigar-shaped ones.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/base.css">
+  <link rel="stylesheet" href="../../css/theme.css">
+</head>
+<body>
+
+  <!-- ===== Header ===== -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="../../index.html" class="brand">Angelos Mengoudis</a>
+      <nav class="main-nav" aria-label="Main">
+        <a href="../../index.html">Home</a>
+        <a href="../../projects.html" aria-current="page">Projects</a>
+        <a href="#">Master's Thesis</a>
+        <a href="../../outreach/index.html">Science Outreach</a>
+        <a href="#">Visual Work</a>
+        <a href="#">About</a>
+        <a href="#">Contact</a>
+      </nav>
+      <details class="cv-menu">
+        <summary class="btn btn-primary">View / Download CV</summary>
+        <ul>
+          <li><a href="../../CV_Science%201.pdf" target="_blank">Science / Research</a></li>
+          <li><a href="../../CV_Data.pdf" target="_blank">Data Analysis</a></li>
+          <li><a href="../../CV_Science_communication.pdf" target="_blank">Science Communication</a></li>
+          <li><a href="../../CV_Teaching.pdf" target="_blank">Teaching</a></li>
+        </ul>
+      </details>
+    </div>
+  </header>
+
+  <main class="container">
+    <a href="../../projects.html" class="back-link">← All projects</a>
+
+    <!-- ===== Title ===== -->
+    <section class="project-head">
+      <p class="badge">Programming &amp; Computational Methods</p>
+      <h1>Convolutional Neural Network from Scratch</h1>
+      <p class="summary">I built a convolutional neural network from scratch that can tell whether a galaxy is elliptical or cigar-shaped.</p>
+
+      <dl class="facts">
+        <div><dt>Year</dt><dd>2025</dd></div>
+        <div><dt>Context</dt><dd>Data science course assignment, University of Geneva</dd></div>
+        <div><dt>Assignment by</dt><dd>Yannick Eyholzer</dd></div>
+        <div><dt>Built with</dt><dd>Python, NumPy</dd></div>
+      </dl>
+    </section>
+
+    <!-- ===== Context ===== -->
+    <article class="prose">
+      <h2>Context</h2>
+      <p>This was a project for a data science class, where we could choose from several projects. I picked this one for two reasons.</p>
+      <p>First, I wanted to understand convolution. <a href="https://www.youtube.com/watch?v=KuXjwB4LzSA" target="_blank" rel="noopener">3Blue1Brown's video on convolution</a> was what first got me interested in it.</p>
+      <p>Second, I was fascinated by neural networks and how they are now used almost everywhere, and I wanted a real grasp of how they work. <a href="https://www.youtube.com/watch?v=hfMk-kjRv4c" target="_blank" rel="noopener">Sebastian Lague's video</a> helped me understand neural networks, but it didn't cover convolutional ones. Building one myself seemed like the best way to learn.</p>
+      <p>It was considered the most demanding project of the class, but since it brought together two things I was already curious about, it felt worth taking on.</p>
+
+      <h2>The question</h2>
+      <p>Is this galaxy round or elongated? From a small 31 × 31 pixel image, the network has to decide which of the two shapes it is looking at.</p>
+    </article>
+
+    <div class="figure-row" style="max-width: 720px">
+      <figure class="figure pixels">
+        <img src="images/galaxy-elliptical-01.png" alt="A small, round, fuzzy galaxy at the centre of a dark pixelated image.">
+        <figcaption>Elliptical</figcaption>
+      </figure>
+      <figure class="figure pixels">
+        <img src="images/galaxy-cigar-shaped-03.png" alt="An elongated, diagonal galaxy in a dark pixelated image.">
+        <figcaption>Cigar-shaped</figcaption>
+      </figure>
+    </div>
+
+    <!-- ===== How the network works ===== -->
+    <article class="prose">
+      <h2>How it works</h2>
+      <p>The image passes through two convolution layers. The first picks up small local patterns. The second combines them into a single number: how likely the galaxy is to be cigar-shaped.</p>
+    </article>
+
+    <div class="pipeline" role="img" aria-label="Diagram: galaxy image, then a 3 by 3 convolution with padding and ReLU, then a 31 by 31 convolution that reduces the image to one number, then a sigmoid giving a value between 0 for elliptical and 1 for cigar-shaped.">
+      <div class="pipe-node">
+        <div class="visual"><img src="images/galaxy-cigar-shaped-03.png" alt=""></div>
+        <strong>Image</strong>
+        <span>31 × 31 pixels, greyscale</span>
+      </div>
+      <div class="pipe-arrow" aria-hidden="true">→</div>
+      <div class="pipe-node">
+        <div class="visual">
+          <svg viewBox="0 0 100 96" class="draw" aria-hidden="true">
+            <rect x="8" y="6" width="84" height="84" stroke-dasharray="3 3"/>
+            <rect x="20" y="18" width="60" height="60" class="fill-soft"/>
+            <path d="M32 18V78M44 18V78M56 18V78M68 18V78M20 30H80M20 42H80M20 54H80M20 66H80"/>
+            <rect x="20" y="18" width="36" height="36" class="fill-hl"/>
+          </svg>
+        </div>
+        <strong>Layer 1</strong>
+        <span>3 × 3 convolution, padding, ReLU</span>
+      </div>
+      <div class="pipe-arrow" aria-hidden="true">→</div>
+      <div class="pipe-node">
+        <div class="visual">
+          <svg viewBox="0 0 100 96" class="draw" aria-hidden="true">
+            <rect x="6" y="18" width="60" height="60" class="fill-hl"/>
+            <path d="M72 48H86M82 44L86 48L82 52" class="hl"/>
+            <circle cx="93" cy="48" r="4" class="fill-hl"/>
+          </svg>
+        </div>
+        <strong>Layer 2</strong>
+        <span>31 × 31 convolution: the whole image becomes one number</span>
+      </div>
+      <div class="pipe-arrow" aria-hidden="true">→</div>
+      <div class="pipe-node">
+        <div class="visual">
+          <svg viewBox="0 0 100 96" class="draw" aria-hidden="true">
+            <path d="M14 82H94M14 82V8"/>
+            <path d="M14 78C50 78 58 14 94 14" class="hl"/>
+            <text x="3" y="82">0</text>
+            <text x="3" y="17">1</text>
+          </svg>
+        </div>
+        <strong>Sigmoid</strong>
+        <span>0 = elliptical<br>1 = cigar-shaped</span>
+      </div>
+    </div>
+
+    <!-- ===== What I built ===== -->
+    <article class="prose">
+      <h2>What I built</h2>
+      <p>Everything is written from scratch in Python and NumPy, without machine-learning libraries:</p>
+      <ul>
+        <li>the convolution and the zero-padding around the image</li>
+        <li>activation functions (ReLU, sigmoid and others) and their derivatives</li>
+        <li>loss functions to measure how wrong a prediction is</li>
+        <li>backpropagation and the weight updates</li>
+        <li>a model class where I choose the number of layers, the kernel sizes and the padding</li>
+        <li>the training loop</li>
+      </ul>
+
+      <h2>Backpropagation</h2>
+      <p>The part that took me the longest to understand was backpropagation: not just the steps, but why each one is needed. I worked through the derivation by hand. To send the error back through a layer, you convolve it with the same kernel rotated by 180°.</p>
+    </article>
+
+    <!-- The backpropagation result, as written in Angelos's notebook -->
+    <p class="equation" aria-label="delta of layer l minus 1 equals the padded delta of layer l convolved with the kernel of layer l rotated by 180 degrees">
+      δ<sup>l−1</sup> = δ<sub>p</sub><sup>l</sup> ∗ rot180(K<sup>l</sup>)
+    </p>
+
+    <!-- ===== What it learned ===== -->
+    <article class="prose">
+      <h2>Inside the trained network</h2>
+      <p>Before the galaxies, I checked that everything worked on a simpler task: turning each image into its negative. Then I trained networks with one, two and three layers to classify the galaxies, and looked at what they had learned.</p>
+    </article>
+
+    <div class="figure-row wide">
+      <figure class="figure plot">
+        <img src="images/kernel-two-layer-first.png" alt="A 3 by 3 grid of coloured squares showing the learned first-layer weights.">
+        <figcaption>The first layer learned diagonal features.</figcaption>
+      </figure>
+      <figure class="figure plot">
+        <img src="images/kernel-two-layer-second.png" alt="A 31 by 31 heatmap, mostly uniform, with a structured pattern near the centre.">
+        <figcaption>The second layer focuses on the centre of the image and captures the overall shape of the galaxy.</figcaption>
+      </figure>
+      <figure class="figure plot">
+        <img src="images/galaxy-saved-misclassification.png" alt="A small, compact galaxy labelled true label 0, meaning elliptical.">
+        <figcaption>A miss: an elliptical galaxy predicted as cigar-shaped. The network struggles most with very small galaxies and with images that are genuinely ambiguous.</figcaption>
+      </figure>
+    </div>
+
+    <!-- ===== Looking back ===== -->
+    <article class="prose">
+      <h2>What I learned</h2>
+      <ul>
+        <li>Turning mathematical equations into working code</li>
+        <li>Planning and organising a larger program by breaking it into steps</li>
+        <li>Structuring code with classes</li>
+        <li>How convolutional networks work, from the inside</li>
+      </ul>
+      <p>Next time, I would spend more time on the math first and plan the whole structure on paper before writing any code.</p>
+    </article>
+
+    <article class="prose">
+      <h2>Related projects</h2>
+      <ul>
+        <li><a href="../sb2-radial-velocities/index.html">Radial Velocities of a Double-Lined Spectroscopic Binary</a></li>
+      </ul>
+    </article>
+  </main>
+
+  <!-- ===== Footer ===== -->
+  <footer class="site-footer" id="contact">
+    <div class="container footer-inner">
+      <div>
+        <h2>Get in touch</h2>
+        <p>For research, collaborations, jobs, outreach or creative projects.</p>
+      </div>
+      <ul class="contact-list">
+        <li><a href="mailto:Angelos.Mengoudis@etu.unige.ch">Angelos.Mengoudis@etu.unige.ch</a></li>
+        <li><a href="https://www.linkedin.com/in/angelos-mengoudis" target="_blank">LinkedIn</a></li>
+        <li><a href="#" class="todo">GitHub (URL to add)</a></li>
+      </ul>
+    </div>
+    <div class="container footer-bottom">© Angelos Mengoudis</div>
+  </footer>
+
+</body>
+</html>

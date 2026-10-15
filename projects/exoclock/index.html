@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ExoClock – Angelos Mengoudis</title>
+  <meta name="description" content="ExoClock is an open project where anyone with a telescope and a camera can time exoplanet transits for ESA's Ariel mission.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/base.css">
+  <link rel="stylesheet" href="../../css/theme.css">
+</head>
+<body>
+
+  <!-- ===== Header (same on every page) ===== -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="../../index.html" class="brand">Angelos Mengoudis</a>
+      <nav class="main-nav" aria-label="Main">
+        <a href="../../index.html">Home</a>
+        <a href="../../projects.html" aria-current="page">Projects</a>
+        <a href="#">Master's Thesis</a>
+        <a href="../../outreach/index.html">Science Outreach</a>
+        <a href="#">Visual Work</a>
+        <a href="#">About</a>
+        <a href="#">Contact</a>
+      </nav>
+      <details class="cv-menu">
+        <summary class="btn btn-primary">View / Download CV</summary>
+        <ul>
+          <li><a href="../../CV_Science%201.pdf" target="_blank">Science / Research</a></li>
+          <li><a href="../../CV_Data.pdf" target="_blank">Data Analysis</a></li>
+          <li><a href="../../CV_Science_communication.pdf" target="_blank">Science Communication</a></li>
+          <li><a href="../../CV_Teaching.pdf" target="_blank">Teaching</a></li>
+        </ul>
+      </details>
+    </div>
+  </header>
+
+  <main class="container">
+    <a href="../../projects.html" class="back-link">← All projects</a>
+
+    <!-- ===== Title ===== -->
+    <section class="project-head">
+      <div class="head-with-logo">
+        <div>
+          <p class="badge">Data Analysis</p>
+          <h1>Exoplanet Transit Analysis (ExoClock)</h1>
+          <p class="summary">ExoClock is an open project in which anyone with a telescope and a camera can time exoplanet transits for ESA's Ariel space mission. I took part as a student.</p>
+        </div>
+        <a href="https://www.exoclock.space/" target="_blank" rel="noopener"><img class="head-logo" src="images/exoclock-logo.png" alt="ExoClock logo"></a>
+      </div>
+
+      <dl class="facts">
+        <div><dt>Year</dt><dd>2024</dd></div>
+        <div><dt>Context</dt><dd>Two-student group, supervised by Ioannis Gkolias</dd></div>
+        <div><dt>Built with</dt><dd>HOPS, relative photometry</dd></div>
+      </dl>
+
+      <p class="hero-actions"><a href="https://www.exoclock.space/" class="btn btn-primary" target="_blank" rel="noopener">Visit ExoClock ↗</a></p>
+    </section>
+
+    <p class="takeaway">You don't need to be a professional astronomer to contribute to real exoplanet research. A small telescope, a camera and some careful work are enough.</p>
+
+    <!-- ===== The idea + transit animation ===== -->
+    <section class="split">
+      <article class="prose">
+        <h2>Why exoplanets need a clock</h2>
+        <p>When a planet passes in front of its star, it blocks a little of the starlight. This is a <em>transit</em>. Transits repeat with every orbit, so we can predict the next one, but the uncertainty on those predictions grows over time.</p>
+        <p>Space telescopes such as ESA's Ariel, which will study about 1000 exoplanets, need to point at the right planet at the right moment. ExoClock keeps those predictions up to date with new observations from small and medium telescopes, including ones run by members of the public.</p>
+      </article>
+
+      <figure class="anim-box transit-anim">
+        <svg viewBox="0 0 400 270" role="img" aria-labelledby="transit-title">
+          <title id="transit-title">A planet crosses in front of its star. Below, the star's measured brightness dips while the planet covers part of it.</title>
+          <circle class="c-star" cx="200" cy="80" r="55"/>
+          <circle id="planet" class="t-planet" cx="110" cy="92" r="10"/>
+          <line class="l-axis" x1="40" y1="250" x2="360" y2="250"/>
+          <line class="l-axis" x1="40" y1="160" x2="40" y2="250"/>
+          <text class="anim-label" x="46" y="168">brightness</text>
+          <text class="anim-label" x="322" y="264">time</text>
+          <path id="lc-path" class="l-accent"/>
+          <circle id="lc-dot" class="t-dot" r="4"/>
+        </svg>
+        <figcaption>Schematic transit, not real data. The dip is exaggerated: a real one is usually around 1% or less.</figcaption>
+      </figure>
+    </section>
+
+    <!-- ===== My part ===== -->
+    <article class="prose">
+      <h2>What we did</h2>
+      <p>This was my first hands-on work with exoplanets. In a group of two students, we observed a star during a known exoplanet transit. We analysed the images with HOPS, using relative photometry: the target star is measured against comparison stars in the same images, so changes in the sky affect them all equally and only the transit stands out. We then submitted the light curve to ExoClock.</p>
+    </article>
+
+    <article class="prose">
+      <h2>It works</h2>
+      <p>ExoClock's latest catalogue combined about 30,000 measurements to update the predictions for 620 exoplanets, and 45% of them needed an update. Anyone who contributes to a data release, even with a single observation, becomes a co-author of the paper.</p>
+    </article>
+
+    <!-- ===== How to take part ===== -->
+    <section>
+      <h2 class="steps-title">How to take part</h2>
+      <ol class="steps">
+        <li><strong>Register your telescope</strong><span>Any telescope with a CCD or CMOS camera.</span></li>
+        <li><strong>Get your schedule</strong><span>A personal list of transits you can observe.</span></li>
+        <li><strong>Observe a transit</strong><span>Image the star before, during and after it.</span></li>
+        <li><strong>Analyse the images</strong><span>Make a light curve, for example with HOPS.</span></li>
+        <li><strong>Upload it</strong><span>The team reviews it and adds it to the database.</span></li>
+      </ol>
+      <p class="steps-intro">Full instructions are on <a href="https://www.exoclock.space/contribute" target="_blank" rel="noopener">ExoClock's "Contribute" page</a>.</p>
+    </section>
+
+    <article class="prose">
+      <h2>Related projects</h2>
+      <ul>
+        <li><a href="../sb2-radial-velocities/index.html">SB2 Radial Velocities</a>: another way to detect companions, from the star's motion instead of its brightness.</li>
+        <li><a href="../photometric-calibration/index.html">Photometric Calibration Pipeline</a>: turning the counts measured in an image into catalogue fluxes.</li>
+      </ul>
+    </article>
+  </main>
+
+  <!-- ===== Footer (same on every page) ===== -->
+  <footer class="site-footer" id="contact">
+    <div class="container footer-inner">
+      <div>
+        <h2>Get in touch</h2>
+        <p>For research, collaborations, jobs, outreach or creative projects.</p>
+      </div>
+      <ul class="contact-list">
+        <li><a href="mailto:Angelos.Mengoudis@etu.unige.ch">Angelos.Mengoudis@etu.unige.ch</a></li>
+        <li><a href="https://www.linkedin.com/in/angelos-mengoudis" target="_blank">LinkedIn</a></li>
+        <li><a href="#" class="todo">GitHub (URL to add)</a></li>
+      </ul>
+    </div>
+    <div class="container footer-bottom">© Angelos Mengoudis</div>
+  </footer>
+
+  <script>
+    // ---------------------------------------------------------------
+    // Transit animation: the planet crosses the star, and a dot traces
+    // the star's brightness below. Brightness = 1 − (covered area),
+    // using the exact overlap of two circles. Depth is exaggerated.
+    // ---------------------------------------------------------------
+    (function () {
+      const R = 55, r = 10, starX = 200;   // star and planet radii, star centre
+      const xStart = 110, xEnd = 290;      // planet path
+      const yTop = 175, depthPx = 55;      // light-curve baseline and dip size
+
+      // Area of overlap between two circles (radii R, r) at distance d
+      function overlap(d) {
+        if (d >= R + r) return 0;
+        if (d <= R - r) return Math.PI * r * r;
+        const a = r * r * Math.acos((d * d + r * r - R * R) / (2 * d * r));
+        const b = R * R * Math.acos((d * d + R * R - r * r) / (2 * d * R));
+        const c = 0.5 * Math.sqrt((-d + r + R) * (d + r - R) * (d - r + R) * (d + r + R));
+        return a + b - c;
+      }
+
+      // Map planet position (0–1 along its path) to light-curve point
+      const planetX = t => xStart + t * (xEnd - xStart);
+      const curveX = t => 40 + t * 320;
+      const curveY = t => yTop + depthPx * overlap(Math.abs(planetX(t) - starX)) / (Math.PI * r * r);
+
+      // Draw the full light curve once
+      let d = '';
+      for (let i = 0; i <= 200; i++) {
+        const t = i / 200;
+        d += (i ? 'L' : 'M') + curveX(t).toFixed(1) + ' ' + curveY(t).toFixed(1);
+      }
+      document.getElementById('lc-path').setAttribute('d', d);
+
+      const planet = document.getElementById('planet');
+      const dot = document.getElementById('lc-dot');
+      function place(t) {
+        planet.setAttribute('cx', planetX(t));
+        dot.setAttribute('cx', curveX(t));
+        dot.setAttribute('cy', curveY(t));
+      }
+
+      // Reduced motion: show the planet mid-transit and stop
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        place(0.5);
+        return;
+      }
+
+      const period = 7000; // ms per crossing
+      let start = null;
+      function frame(now) {
+        if (start === null) start = now;
+        place(((now - start) % period) / period);
+        requestAnimationFrame(frame);
+      }
+      requestAnimationFrame(frame);
+    })();
+  </script>
+
+</body>
+</html>

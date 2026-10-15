@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Angelos Mengoudis</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <!-- Layout, then colours and fonts -->
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/theme.css">
+</head>
+<body>
+
+  <!-- ===== Header (same on every page) ===== -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="brand">Angelos Mengoudis</a>
+
+      <nav class="main-nav" aria-label="Main">
+        <a href="index.html" aria-current="page">Home</a>
+        <a href="projects.html">Projects</a>
+        <a href="#">Master's Thesis</a>
+        <a href="outreach/index.html">Science Outreach</a>
+        <a href="#">Visual Work</a>
+        <a href="#">About</a>
+        <a href="#">Contact</a>
+      </nav>
+
+      <!-- CV dropdown: <details> opens and closes without any JavaScript -->
+      <details class="cv-menu">
+        <summary class="btn btn-primary">View / Download CV</summary>
+        <ul>
+          <li><a href="CV_Science%201.pdf" target="_blank">Science / Research</a></li>
+          <li><a href="CV_Data.pdf" target="_blank">Data Analysis</a></li>
+          <li><a href="CV_Science_communication.pdf" target="_blank">Science Communication</a></li>
+          <li><a href="CV_Teaching.pdf" target="_blank">Teaching</a></li>
+        </ul>
+      </details>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ===== Hero ===== -->
+    <section class="hero">
+      <div class="container hero-inner">
+        <div class="hero-text">
+          <p class="eyebrow">Astrophysics · Scientific Computing · Data Analysis · Science Communication · Visual Storytelling</p>
+          <h1>Angelos Mengoudis</h1>
+          <p class="lede">I study astrophysics at the University of Geneva and work across scientific research, data analysis, programming, science outreach, and visual media. This site is a collection of projects, research, and creative work I have developed along the way.</p>
+          <div class="hero-actions">
+            <a href="projects.html" class="btn btn-primary">See projects</a>
+            <a href="#contact" class="btn btn-ghost">Get in touch</a>
+          </div>
+        </div>
+        <div class="hero-visual placeholder">PLACEHOLDER – hero image (e.g. night-sky timelapse still)</div>
+      </div>
+    </section>
+
+    <!-- ===== Featured work ===== -->
+    <section class="section featured">
+      <div class="container">
+        <div class="section-head">
+          <h2>Featured work</h2>
+          <a href="projects.html" class="more-link">All projects →</a>
+        </div>
+
+        <div class="card-grid">
+          <article class="card">
+            <div class="card-image"><img src="projects/nirps-guiding-camera/images/binary-fibre-visualisation.jpg" alt=""></div>
+            <div class="card-body">
+              <p class="card-meta">2025 · Research &amp; Instrumentation</p>
+              <h3><a href="projects/nirps-guiding-camera/index.html">Characterization of the NIRPS Guiding Camera for Close Visual Binaries</a></h3>
+              <p>How faint a companion star can be and still be seen by the NIRPS guiding camera, and how much of its light leaks into the fibre.</p>
+              <ul class="tags"><li>Python</li><li>Instrumentation</li><li>Contrast curves</li></ul>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="card-image"><img src="projects/photometric-calibration/images/card.png" alt=""></div>
+            <div class="card-body">
+              <p class="card-meta">2024 · Data Analysis</p>
+              <h3><a href="projects/photometric-calibration/index.html">Photometric Calibration Pipeline</a></h3>
+              <p>Finding the stars in a telescope image, placing them on the sky, and comparing their counts with Pan-STARRS catalogue fluxes.</p>
+              <ul class="tags"><li>Python</li><li>Photometry</li></ul>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="card-image card-logo"><img src="projects/exoclock/images/exoclock-logo.png" alt="ExoClock logo"></div>
+            <div class="card-body">
+              <p class="card-meta">2024 · Data Analysis</p>
+              <h3><a href="projects/exoclock/index.html">Exoplanet Transit Analysis (ExoClock)</a></h3>
+              <p>Relative photometry and analysis of exoplanet transit light curves.</p>
+              <ul class="tags"><li>Photometry</li><li>Exoplanets</li></ul>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="card-image"><img src="projects/cnn-from-scratch/images/galaxy-cigar-shaped-03.png" alt="" style="image-rendering: pixelated"></div>
+            <div class="card-body">
+              <p class="card-meta">2025 · Programming</p>
+              <h3><a href="projects/cnn-from-scratch/index.html">Convolutional Neural Network from Scratch</a></h3>
+              <p>A neural network built from scratch in Python and NumPy that tells elliptical galaxies from cigar-shaped ones.</p>
+              <ul class="tags"><li>Python</li><li>Machine learning</li></ul>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Master's thesis highlight ===== -->
+    <section class="section thesis">
+      <div class="container thesis-inner">
+        <div class="thesis-text">
+          <p class="badge">Ongoing · Master's Thesis</p>
+          <h2>Probing exoplanets in polarized light</h2>
+          <p class="thesis-sub">Study of a polarimetric mode for the RISTRETTO instrument</p>
+          <p>Instrumentation and data analysis related to the use of polarized reflected light for exoplanet characterization, in connection with the RISTRETTO instrument at the University of Geneva.</p>
+          <a href="#" class="btn btn-ghost">Read about the thesis</a>
+        </div>
+        <div class="thesis-visual placeholder">PLACEHOLDER – thesis diagram</div>
+      </div>
+    </section>
+
+    <!-- ===== Explore by area ===== -->
+    <section class="section areas">
+      <div class="container">
+        <h2>Explore</h2>
+        <div class="area-grid">
+          <a href="projects.html" class="area">
+            <span class="area-num">01</span>
+            <h3>Projects</h3>
+            <p>Research, data-analysis, programming and university work.</p>
+          </a>
+          <a href="outreach/index.html" class="area">
+            <span class="area-num">02</span>
+            <h3>Science Outreach</h3>
+            <p>Museum internship, astro-hikes and public engagement.</p>
+          </a>
+          <a href="#" class="area">
+            <span class="area-num">03</span>
+            <h3>Visual Work</h3>
+            <p>Videos, timelapses and photography.</p>
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===== Footer / contact ===== -->
+  <footer class="site-footer" id="contact">
+    <div class="container footer-inner">
+      <div>
+        <h2>Get in touch</h2>
+        <p>For research, collaborations, jobs, outreach or creative projects.</p>
+      </div>
+      <ul class="contact-list">
+        <li><a href="mailto:Angelos.Mengoudis@etu.unige.ch">Angelos.Mengoudis@etu.unige.ch</a></li>
+        <li><a href="https://www.linkedin.com/in/angelos-mengoudis" target="_blank">LinkedIn</a></li>
+        <li><a href="#" class="todo">GitHub (URL to add)</a></li>
+      </ul>
+    </div>
+    <div class="container footer-bottom">© Angelos Mengoudis</div>
+  </footer>
+</body>
+</html>

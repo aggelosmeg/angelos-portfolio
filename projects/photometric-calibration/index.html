@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Photometric Calibration Pipeline – Angelos Mengoudis</title>
+  <meta name="description" content="A prototype Python workflow that finds the stars in an astronomical image, locates them on the sky, matches them with the Pan-STARRS catalogue and compares measured counts with catalogue fluxes.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/base.css">
+  <link rel="stylesheet" href="../../css/theme.css">
+</head>
+<body>
+
+  <!-- ===== Header (same on every page) ===== -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="../../index.html" class="brand">Angelos Mengoudis</a>
+      <nav class="main-nav" aria-label="Main">
+        <a href="../../index.html">Home</a>
+        <a href="../../projects.html" aria-current="page">Projects</a>
+        <a href="#">Master's Thesis</a>
+        <a href="../../outreach/index.html">Science Outreach</a>
+        <a href="#">Visual Work</a>
+        <a href="#">About</a>
+        <a href="#">Contact</a>
+      </nav>
+      <details class="cv-menu">
+        <summary class="btn btn-primary">View / Download CV</summary>
+        <ul>
+          <li><a href="../../CV_Science%201.pdf" target="_blank">Science / Research</a></li>
+          <li><a href="../../CV_Data.pdf" target="_blank">Data Analysis</a></li>
+          <li><a href="../../CV_Science_communication.pdf" target="_blank">Science Communication</a></li>
+          <li><a href="../../CV_Teaching.pdf" target="_blank">Teaching</a></li>
+        </ul>
+      </details>
+    </div>
+  </header>
+
+  <main class="container">
+    <a href="../../projects.html" class="back-link">← All projects</a>
+
+    <!-- ===== Title ===== -->
+    <section class="project-head">
+      <p class="badge">Data Analysis</p>
+      <h1>Photometric Calibration Pipeline</h1>
+      <p class="summary">A prototype Python workflow that finds the stars in a telescope image, works out where they are on the sky, and compares their measured brightness with a star catalogue.</p>
+
+      <dl class="facts">
+        <div><dt>Year</dt><dd>2024</dd></div>
+        <div><dt>Context</dt><dd>Undergraduate project</dd></div>
+        <div><dt>Method</dt><dd>Aperture photometry, plate solving, catalogue matching</dd></div>
+        <div><dt>Built with</dt><dd>Python, Astropy, photutils, twirl</dd></div>
+      </dl>
+    </section>
+
+    <!-- ===== Idea ===== -->
+    <article class="prose">
+      <h2>The idea</h2>
+      <p>A camera on a telescope records each star as a number of counts. Those counts depend on the telescope, the camera and the night, so they don't directly say how bright the star really is. Photometric calibration links the two: measure stars whose brightness is already known from a catalogue, and use them to convert counts into flux.</p>
+      <p>This was one of my first substantial coding projects. In a Jupyter notebook, I built each step of that chain on a single image, from the raw picture to a comparison with catalogue fluxes.</p>
+    </article>
+
+    <!-- ===== Steps ===== -->
+    <article class="prose">
+      <h2>Finding and measuring the stars</h2>
+      <p>I first subtracted the typical sky level from the image, so that what remains is mostly light from the stars. To find the stars, I used the DAOStarFinder tool from photutils, and I measured each one by adding up the counts inside a small circle around it (aperture photometry).</p>
+    </article>
+
+    <figure class="figure plot" style="max-width: 620px">
+      <img src="images/detected-stars.png" alt="Greyscale star field with about twenty bright stars circled in red, spread across the whole image.">
+      <figcaption>The image after sky subtraction, contrast-stretched to show faint stars. The red circles mark the bright stars used in the next step to place the image on the sky.</figcaption>
+    </figure>
+
+    <article class="prose">
+      <h2>Placing the image on the sky</h2>
+      <p>To compare with a catalogue, each star needs sky coordinates (right ascension and declination), not just a pixel position. Finding them is called plate solving. I used the twirl package, which matches the pattern of the brightest stars in the image with stars from the Gaia catalogue and returns the transformation between pixels and sky (a World Coordinate System, or WCS).</p>
+    </article>
+
+    <figure class="figure plot" style="max-width: 460px">
+      <img src="images/wcs-prediction.png" alt="Zoomed, high-contrast patch of the image. Red circles mark where catalogue stars should appear, and several sit on top of bright stars in the image.">
+      <figcaption>A check of the solution: in a small part of the image, the red circles show where the WCS predicts catalogue stars should be.</figcaption>
+    </figure>
+
+    <article class="prose">
+      <h2>Matching with the catalogue</h2>
+      <p>With sky coordinates for every detected star, I queried the Pan-STARRS DR2 catalogue (through the MAST catalogue service) for the stars in the same field and their known r-band brightness. I then paired each image star with the catalogue star at the same position, and dropped any star that matched more than one partner.</p>
+    </article>
+
+    <figure class="figure plot wide">
+      <img src="images/catalog-match.png" alt="Two scatter plots of declination against right ascension. Blue points are stars measured in the image and red points are Pan-STARRS stars. Left: the whole field, where many points overlap. Right: a zoom on a small region, where several blue and red points sit on top of each other.">
+      <figcaption>Stars from the image (blue) and from Pan-STARRS (red). Where they overlap the points look purple. Right: a zoom on a small region.</figcaption>
+    </figure>
+
+    <article class="prose">
+      <h2>From counts to flux</h2>
+      <p>Finally, I converted the catalogue magnitudes of the matched stars into fluxes and plotted them against the counts I measured. If the measurements are consistent, the points lie on a straight line, and that line is the conversion from counts to flux for this image.</p>
+    </article>
+
+    <figure class="figure plot" style="max-width: 620px">
+      <img src="images/counts-to-flux-fit.png" alt="Log-log scatter plot of catalogue flux against measured counts for the matched stars. The points follow a straight line, shown in black, over several orders of magnitude.">
+      <figcaption>Catalogue flux against measured counts for the matched stars, with a straight-line fit (black), shown as a visual check.</figcaption>
+    </figure>
+
+    <article class="prose">
+      <h2>Related projects</h2>
+      <ul>
+        <li><a href="../exoclock/index.html">Exoplanet Transit Analysis (ExoClock)</a>: measuring the brightness of a star over time to catch an exoplanet transit.</li>
+      </ul>
+    </article>
+  </main>
+
+  <!-- ===== Footer (same on every page) ===== -->
+  <footer class="site-footer" id="contact">
+    <div class="container footer-inner">
+      <div>
+        <h2>Get in touch</h2>
+        <p>For research, collaborations, jobs, outreach or creative projects.</p>
+      </div>
+      <ul class="contact-list">
+        <li><a href="mailto:Angelos.Mengoudis@etu.unige.ch">Angelos.Mengoudis@etu.unige.ch</a></li>
+        <li><a href="https://www.linkedin.com/in/angelos-mengoudis" target="_blank">LinkedIn</a></li>
+        <li><a href="#" class="todo">GitHub (URL to add)</a></li>
+      </ul>
+    </div>
+    <div class="container footer-bottom">© Angelos Mengoudis</div>
+  </footer>
+
+</body>
+</html>

@@ -1,0 +1,18 @@
+# Files that stay on this computer and are never uploaded to GitHub.
+
+# CVs: contain phone number, date of birth and home address.
+# Web versions without these details will be added later.
+CV_*
+
+# Raw source material (original reports, slides, notebooks, zip files).
+# Only the finished, checked copies inside the site folders are uploaded.
+website-handoff/
+projects/NOESIS/
+projects/fourier optics/
+projects/optical design/
+projects/photometric calibration/
+projects/spectroscopy/
+
+# Mac and tool clutter
+.DS_Store
+.Rhistory

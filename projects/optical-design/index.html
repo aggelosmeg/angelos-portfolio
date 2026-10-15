@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Optical Design Exercises – Angelos Mengoudis</title>
+  <meta name="description" content="Design of a simple adaptive optics system with a pyramid wavefront sensor for the Euler Telescope, and of a two-prism atmospheric dispersion compensator.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/base.css">
+  <link rel="stylesheet" href="../../css/theme.css">
+</head>
+<body>
+
+  <!-- ===== Header (same on every page) ===== -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="../../index.html" class="brand">Angelos Mengoudis</a>
+      <nav class="main-nav" aria-label="Main">
+        <a href="../../index.html">Home</a>
+        <a href="../../projects.html" aria-current="page">Projects</a>
+        <a href="#">Master's Thesis</a>
+        <a href="../../outreach/index.html">Science Outreach</a>
+        <a href="#">Visual Work</a>
+        <a href="#">About</a>
+        <a href="#">Contact</a>
+      </nav>
+      <details class="cv-menu">
+        <summary class="btn btn-primary">View / Download CV</summary>
+        <ul>
+          <li><a href="../../CV_Science%201.pdf" target="_blank">Science / Research</a></li>
+          <li><a href="../../CV_Data.pdf" target="_blank">Data Analysis</a></li>
+          <li><a href="../../CV_Science_communication.pdf" target="_blank">Science Communication</a></li>
+          <li><a href="../../CV_Teaching.pdf" target="_blank">Teaching</a></li>
+        </ul>
+      </details>
+    </div>
+  </header>
+
+  <main class="container">
+    <a href="../../projects.html" class="back-link">← All projects</a>
+
+    <!-- ===== Title ===== -->
+    <section class="project-head">
+      <p class="badge">University Coursework</p>
+      <h1>Optical Design Exercises</h1>
+      <p class="summary">Two design exercises: a simple adaptive optics system for the Euler Telescope, and a pair of prisms that undoes the colour spread caused by the atmosphere.</p>
+
+      <dl class="facts">
+        <div><dt>Year</dt><dd>2026</dd></div>
+        <div><dt>Context</dt><dd>Optics and Detectors course exercises</dd></div>
+        <div><dt>Method</dt><dd>Lens layout, ray tracing, optimisation</dd></div>
+        <div><dt>Built with</dt><dd>Python</dd></div>
+      </dl>
+    </section>
+
+    <!-- ===== Part 1: AO system ===== -->
+    <article class="prose">
+      <h2>An adaptive optics system for the Euler Telescope</h2>
+      <p>Turbulence in the atmosphere constantly distorts the light from a star, so a telescope sees a blurred, shimmering image. Adaptive optics (AO) corrects this as it happens: a sensor measures the distortion, and a deformable mirror changes shape to cancel it.</p>
+      <p>My task was to design a simple AO system behind the Euler Telescope: choose the lenses and where to place them, so that each part of the system receives the light in the form it needs.</p>
+    </article>
+
+    <figure class="figure plot" style="max-width: 520px">
+      <img src="images/ao-layout.png" alt="Optical layout. Light from the telescope mirror passes lens L1 to a deformable mirror, then lens L2 to a dichroic mirror. One path goes to the science camera, the other through a pyramid and lens L3 to the wavefront sensor camera.">
+      <figcaption>My layout. Light from the telescope reaches the deformable mirror, then a dichroic mirror splits it between the science camera and the wavefront sensor.</figcaption>
+    </figure>
+
+    <article class="prose">
+      <p>Each lens has one job:</p>
+      <ul>
+        <li><strong>L1</strong> shrinks the wide beam from the telescope to fit the small deformable mirror, and forms an image of the telescope's main mirror on it. That way, each point of the deformable mirror corrects one point of the main mirror.</li>
+        <li><strong>L2</strong> focuses the corrected light onto the science camera, so that the image of a star spans only a few pixels.</li>
+        <li><strong>L3 and the pyramid</strong> feed the wavefront sensor. The pyramid splits the light into four images of the telescope mirror, and the differences between them show how the light is distorted. L3 sets the size of these images, and the pyramid's angle sets how far apart they land.</li>
+      </ul>
+    </article>
+
+    <figure class="figure plot wide">
+      <img src="images/pupil-relay.png" alt="Diagram, not to scale. The telescope's exit pupil on the left, its focal plane, lens L1, and the deformable mirror on the right. A green ray leaves L1 parallel to the axis; a red ray from the edge of the pupil lands on the edge of the deformable mirror.">
+      <figcaption>How L1 works: the beam leaves it parallel (green), and the edge of the telescope's pupil is imaged onto the edge of the deformable mirror (red). Not to scale.</figcaption>
+    </figure>
+
+    <!-- ===== Part 2: ADC ===== -->
+    <article class="prose">
+      <h2>An atmospheric dispersion compensator</h2>
+      <p>Air bends light slightly, and it bends blue light more than red. For a star low in the sky, this stretches its image into a tiny rainbow. An atmospheric dispersion compensator (ADC) is a set of prisms that spreads the colours by the same amount in the opposite direction, so they land back together.</p>
+      <p>I designed an ADC from two prisms made of different glasses. I worked out on paper how a ray bends at each surface, turned that into a Python ray trace, and used an optimiser to find the prism angles that best cancel the spread from the atmosphere.</p>
+    </article>
+
+    <figure class="figure" style="max-width: 420px">
+      <img src="images/prism-ray-sketch.jpg" alt="Hand drawing on squared paper: a ray crossing two prisms placed together, with the angle at each surface labelled.">
+      <figcaption>My hand-drawn ray trace through the two prisms, the starting point for the code.</figcaption>
+    </figure>
+
+    <figure class="figure plot wide">
+      <img src="images/adc-result.png" alt="Two line plots against wavelength. Left: the deviation caused by the atmosphere falls across the band, the ADC correction rises as its mirror image, and what is left after correction stays close to zero, inside a dashed target band. Right: the ADC correction in its active setting, and a minimum-correction setting that stays at zero.">
+      <figcaption>Left: the colour spread from the atmosphere (blue), the ADC's correction (orange), and what is left after correction (green), which stays inside the target band (dashed lines). Right: the ADC set to correct, and set to its minimum correction.</figcaption>
+    </figure>
+
+    <article class="prose">
+      <h2>Related projects</h2>
+      <ul>
+        <li><a href="../fourier-optics/index.html">Fourier Optics Exercises</a></li>
+      </ul>
+    </article>
+  </main>
+
+  <!-- ===== Footer (same on every page) ===== -->
+  <footer class="site-footer" id="contact">
+    <div class="container footer-inner">
+      <div>
+        <h2>Get in touch</h2>
+        <p>For research, collaborations, jobs, outreach or creative projects.</p>
+      </div>
+      <ul class="contact-list">
+        <li><a href="mailto:Angelos.Mengoudis@etu.unige.ch">Angelos.Mengoudis@etu.unige.ch</a></li>
+        <li><a href="https://www.linkedin.com/in/angelos-mengoudis" target="_blank">LinkedIn</a></li>
+        <li><a href="#" class="todo">GitHub (URL to add)</a></li>
+      </ul>
+    </div>
+    <div class="container footer-bottom">© Angelos Mengoudis</div>
+  </footer>
+
+</body>
+</html>
