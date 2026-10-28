@@ -167,7 +167,8 @@ img { max-width: 100%; display: block; }
 .hero h1 { font-size: clamp(2.6rem, 6vw, 4.5rem); }
 .lede { font-size: 1.15rem; color: var(--muted); max-width: 38em; }
 .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 28px; }
-.hero-visual { aspect-ratio: 4 / 5; border-radius: var(--radius); }
+.hero-visual { aspect-ratio: 4 / 5; border-radius: var(--radius); overflow: hidden; }
+.hero-visual img { width: 100%; height: 100%; object-fit: cover; }
 
 /* ---------- Sections ---------- */
 .section { padding: var(--section-space) 0; }
