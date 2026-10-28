@@ -94,8 +94,6 @@ body {
 
 .area { background: var(--surface); }
 
-.cv-menu ul { background: #15173a; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); }
-.cv-menu li a:hover { background: rgba(255, 255, 255, 0.06); }
 
 @media (max-width: 860px) {
   .thesis-inner { padding: 28px 20px; }

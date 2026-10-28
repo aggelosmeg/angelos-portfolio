@@ -125,31 +125,8 @@ img { max-width: 100%; display: block; }
 .main-nav a:hover,
 .main-nav a[aria-current="page"] { color: var(--text); }
 
-/* CV dropdown */
-.cv-menu { position: relative; }
-.cv-menu summary { list-style: none; white-space: nowrap; }
-.cv-menu summary::-webkit-details-marker { display: none; }
-.cv-menu ul {
-  position: absolute;
-  right: 0;
-  top: calc(100% + 8px);
-  min-width: 220px;
-  margin: 0;
-  padding: 6px;
-  list-style: none;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
-}
-.cv-menu li a {
-  display: block;
-  padding: 8px 12px;
-  border-radius: calc(var(--radius) - 2px);
-  text-decoration: none;
-  font-size: 0.9rem;
-}
-.cv-menu li a:hover { background: var(--bg-alt); }
+/* CV link */
+.cv-link { white-space: nowrap; }
 
 /* ---------- Hero ---------- */
 .hero { padding: 80px 0 var(--section-space); }
@@ -290,7 +267,7 @@ img { max-width: 100%; display: block; }
     overflow-x: auto;          /* nav scrolls sideways on small screens */
     padding-bottom: 4px;
   }
-  .cv-menu { margin-left: auto; }
+  .cv-link { margin-left: auto; }
 
   .hero { padding-top: 48px; }
   .hero-inner, .thesis-inner { grid-template-columns: 1fr; gap: 32px; }
