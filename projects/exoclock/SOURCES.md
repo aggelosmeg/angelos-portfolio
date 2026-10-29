@@ -25,9 +25,11 @@ steps to join, and only then a short "What we did".
 The NASA/JPL animation suggested in `PROJECT_NOTES.md` was **not** used. A
 small custom animation in the site's style is used instead.
 
-Note: the publications page still lists Project IV as a preprint "submitted to
-ApJS", while `PROJECT_NOTES.md` cites it as published (ApJS 283, 5, 2026). The
-page links to ExoClock's publications page and does not name the journal.
+Publication update (2026-10-29): Angelos confirmed that the group's contribution
+was included in a publication and supplied the citation: A. Kokori et al. (2026),
+ApJS, 283, 5, DOI 10.3847/1538-4365/ae3238. The "What we did" section now includes
+the citation and links to the [journal article](https://iopscience.iop.org/article/10.3847/1538-4365/ae3238/meta)
+and DOI. This supersedes the earlier note about Project IV being listed as a preprint.
 
 ## Answers from Angelos (2026-10-12)
 
